@@ -1,0 +1,80 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+
+export default function Hero() {
+  return (
+    <section className="bg-cream">
+      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr]">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="flex flex-col gap-6"
+        >
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brand">
+            Kenya&apos;s export-grade blooms
+          </span>
+          <h1 className="text-4xl font-semibold text-charcoal md:text-5xl">
+            Reliable flower sourcing for global wholesale buyers.
+          </h1>
+          <p className="text-lg text-muted">
+            Jolily Blooms Equator Limited consolidates premium Kenyan flowers and delivers
+            consistent weekly supply to Europe, the Middle East, and beyond.
+          </p>
+          <p className="font-accent text-lg text-charcoal">
+            “Fresh from the farm, packed with care, shipped with precision.”
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/flowers"
+              className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-dark"
+            >
+              View Catalogue
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-full border border-brand px-6 py-3 text-sm font-semibold text-brand transition hover:border-brand-dark hover:text-brand-dark"
+            >
+              Send Inquiry
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-6 pt-6 text-sm text-muted md:grid-cols-3">
+            <div>
+              <p className="text-2xl font-semibold text-charcoal">26+</p>
+              <p>Varieties sourced weekly</p>
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-charcoal">48 hrs</p>
+              <p>Average export lead time</p>
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-charcoal">95%</p>
+              <p>Cold chain compliance</p>
+            </div>
+          </div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="relative"
+        >
+          <div className="absolute -left-6 -top-6 h-full w-full rounded-[32px] bg-rose" />
+          <div className="relative overflow-hidden rounded-[32px] bg-white shadow-soft">
+            <Image
+              src="/images/hero-flowers.svg"
+              alt="Assorted export-grade Kenyan flowers"
+              width={720}
+              height={560}
+              className="h-full w-full object-cover"
+              priority
+            />
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

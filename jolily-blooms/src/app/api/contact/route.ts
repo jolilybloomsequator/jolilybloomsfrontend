@@ -1,3 +1,5 @@
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 import DOMPurify from "isomorphic-dompurify";
 import { z } from "zod";
 
@@ -6,9 +8,20 @@ type RateLimitEntry = {
   windowStart: number;
 };
 
-const rateLimitStore = new Map<string, RateLimitEntry>();
 const RATE_LIMIT_COUNT = 5;
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
+const rateLimitStore = new Map<string, RateLimitEntry>();
+
+const hasUpstash =
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN;
+const redis = hasUpstash ? Redis.fromEnv() : null;
+
+const rateLimiter = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(RATE_LIMIT_COUNT, "15 m"),
+    })
+  : null;
 
 const inquirySchema = z.object({
   fullName: z.string().min(2),
@@ -35,7 +48,12 @@ const getClientIp = (request: Request) => {
   return request.headers.get("x-real-ip") ?? "unknown";
 };
 
-const checkRateLimit = (ip: string) => {
+const checkRateLimit = async (ip: string) => {
+  if (rateLimiter) {
+    const { success } = await rateLimiter.limit(ip);
+    return success;
+  }
+
   const now = Date.now();
   const entry = rateLimitStore.get(ip);
 
@@ -56,7 +74,7 @@ const checkRateLimit = (ip: string) => {
 const verifyHCaptcha = async (token: string) => {
   const secret = process.env.HCAPTCHA_SECRET;
   if (!secret) {
-    return true;
+    return false;
   }
 
   const response = await fetch("https://hcaptcha.com/siteverify", {
@@ -78,7 +96,7 @@ const verifyHCaptcha = async (token: string) => {
 export async function POST(request: Request) {
   const ip = getClientIp(request);
 
-  if (!checkRateLimit(ip)) {
+  if (!(await checkRateLimit(ip))) {
     return Response.json({ message: "Too many requests." }, { status: 429 });
   }
 
@@ -94,6 +112,10 @@ export async function POST(request: Request) {
   }
 
   const captchaToken = parsed.data.hcaptchaToken ?? "";
+  if (!process.env.HCAPTCHA_SECRET) {
+    return Response.json({ message: "Captcha verification unavailable." }, { status: 503 });
+  }
+
   if (!(await verifyHCaptcha(captchaToken))) {
     return Response.json({ message: "Captcha verification failed." }, { status: 400 });
   }

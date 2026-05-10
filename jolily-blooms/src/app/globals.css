@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --brand-pink: #c2185b;
-  --brand-magenta: #880e4f;
-  --cream: #fff8f9;
-  --pink-tint: #fce4ec;
-  --charcoal: #1a1a2e;
-  --medium-gray: #555555;
-  --success: #2e7d32;
-  --border-soft: #e6d9dd;
+  --color-brand-pink: #c2185b;
+  --color-brand-magenta: #880e4f;
+  --color-cream: #fff8f9;
+  --color-pink-tint: #fce4ec;
+  --color-charcoal: #1a1a2e;
+  --color-medium-gray: #555555;
+  --color-success: #2e7d32;
+  --color-border-soft: #e6d9dd;
   --shadow-soft: 0 18px 40px rgba(26, 26, 46, 0.12);
 }
 
 @theme inline {
-  --color-brand: var(--brand-pink);
-  --color-brand-dark: var(--brand-magenta);
-  --color-cream: var(--cream);
-  --color-rose: var(--pink-tint);
-  --color-charcoal: var(--charcoal);
-  --color-muted: var(--medium-gray);
-  --color-success: var(--success);
-  --color-border-soft: var(--border-soft);
+  --color-brand: var(--color-brand-pink);
+  --color-brand-dark: var(--color-brand-magenta);
+  --color-cream: var(--color-cream);
+  --color-rose: var(--color-pink-tint);
+  --color-charcoal: var(--color-charcoal);
+  --color-muted: var(--color-medium-gray);
+  --color-success: var(--color-success);
+  --color-border-soft: var(--color-border-soft);
   --shadow-soft: var(--shadow-soft);
   --font-sans: var(--font-inter);
   --font-display: var(--font-playfair);

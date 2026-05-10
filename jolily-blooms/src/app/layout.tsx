@@ -40,12 +40,14 @@ export const metadata: Metadata = {
   title: "Jolily Blooms Equator Limited",
   description:
     "Jolily Blooms Equator Limited connects international buyers with export-grade Kenyan flowers, delivering reliable sourcing, quality, and logistics.",
-  metadataBase: new URL("https://jolilybloomsequator.com"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://jolilybloomsequator.com",
+  ),
   openGraph: {
     title: "Jolily Blooms Equator Limited",
     description:
       "Kenyan flower sourcing and export partner for Europe, the Middle East, and global wholesale buyers.",
-    url: "https://jolilybloomsequator.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jolilybloomsequator.com",
     siteName: "Jolily Blooms Equator Limited",
     locale: "en_US",
     type: "website",

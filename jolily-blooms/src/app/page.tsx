@@ -144,7 +144,7 @@ export default function Home() {
             <h3 className="text-2xl font-semibold text-charcoal">Weekly supply you can plan around</h3>
             <div className="space-y-4 text-sm text-muted">
               <p className="font-data text-base text-charcoal">
-                MOQ: 10 boxes per variety | Weekly cut days: Mon - Thu
+                MOQ: 10 boxes per variety | Weekly cut days: Monday - Thursday
               </p>
               <p>
                 Our consolidation model ensures flexible volumes without compromising the cold chain. We

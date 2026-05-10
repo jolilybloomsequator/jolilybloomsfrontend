@@ -1,5 +1,6 @@
 "use client";
 
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -16,7 +17,7 @@ const inquirySchema = z.object({
   estimatedVolume: z.string().min(1, "Estimated weekly volume is required."),
   message: z.string().min(10, "Please share a short message."),
   website: z.string().optional(),
-  hcaptchaToken: z.string().optional(),
+  hcaptchaToken: z.string().min(1, "Verification is required."),
 });
 
 type InquiryFormValues = z.infer<typeof inquirySchema>;
@@ -35,21 +36,29 @@ const varietyOptions = [
 ];
 
 export default function ContactForm() {
+  const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ?? "";
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [captchaToken, setCaptchaToken] = useState<string>("");
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setValue,
   } = useForm<InquiryFormValues>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
       varieties: [],
+      hcaptchaToken: "",
     },
   });
 
   const onSubmit = async (values: InquiryFormValues) => {
     setStatus("idle");
+    if (!captchaToken || !siteKey) {
+      setStatus("error");
+      return;
+    }
     const response = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -62,6 +71,7 @@ export default function ContactForm() {
     }
 
     setStatus("success");
+    setCaptchaToken("");
     reset();
   };
 
@@ -169,14 +179,31 @@ export default function ContactForm() {
         <input type="text" {...register("website")} autoComplete="off" />
       </label>
 
-      <div className="rounded-xl border border-dashed border-border-soft bg-white px-4 py-3 text-sm text-muted">
-        hCaptcha verification will appear once keys are configured.
+      <div className="rounded-2xl border border-border-soft bg-white p-4 text-sm text-muted">
+        {siteKey ? (
+          <HCaptcha
+            sitekey={siteKey}
+            onVerify={(token) => {
+              setCaptchaToken(token);
+              setValue("hcaptchaToken", token, { shouldValidate: true });
+            }}
+            onExpire={() => {
+              setCaptchaToken("");
+              setValue("hcaptchaToken", "", { shouldValidate: true });
+            }}
+          />
+        ) : (
+          <p>Verification is required to submit this form. Please contact us directly for assistance.</p>
+        )}
+        {errors.hcaptchaToken ? (
+          <span className="mt-2 block text-xs text-brand-dark">{errors.hcaptchaToken.message}</span>
+        ) : null}
       </div>
 
       <div className="flex flex-wrap items-center gap-4">
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !captchaToken || !siteKey}
           className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting ? "Sending..." : "Submit Inquiry"}

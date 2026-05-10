@@ -37,8 +37,16 @@ export default function ContactPage() {
             </div>
             <div className="rounded-3xl border border-border-soft bg-white p-6 shadow-soft">
               <h3 className="text-lg font-semibold text-charcoal">Office hours</h3>
-              <p className="mt-2 text-sm text-muted">Monday - Friday: 8:00am - 6:00pm EAT</p>
-              <p className="text-sm text-muted">Saturday: 9:00am - 1:00pm EAT</p>
+              <dl className="mt-2 space-y-2 text-sm text-muted">
+                <div>
+                  <dt className="font-semibold text-charcoal">Monday - Friday</dt>
+                  <dd>8:00am - 6:00pm EAT</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-charcoal">Saturday</dt>
+                  <dd>9:00am - 1:00pm EAT</dd>
+                </div>
+              </dl>
             </div>
           </FadeIn>
         </div>

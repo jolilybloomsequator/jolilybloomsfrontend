@@ -1,0 +1,103 @@
+import Image from "next/image";
+import FadeIn from "../../components/FadeIn";
+import PageHeader from "../../components/PageHeader";
+
+const values = [
+  {
+    title: "Integrity",
+    description: "Transparent sourcing, honest lead times, and reliable weekly updates.",
+  },
+  {
+    title: "Consistency",
+    description: "Stable supply volumes backed by a vetted network of Kenyan growers.",
+  },
+  {
+    title: "Care",
+    description: "Cold-chain stewardship from farm to freight with QC reports on request.",
+  },
+];
+
+export default function AboutPage() {
+  return (
+    <div>
+      <PageHeader
+        eyebrow="About Jolily Blooms"
+        title="A trusted Kenyan flower export partner"
+        description="Jolily Blooms Equator Limited connects international buyers with export-grade flowers sourced from Kenyan farms. Our consolidation model simplifies procurement while maintaining transparency, quality, and on-time delivery."
+      />
+
+      <section className="bg-white">
+        <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 lg:grid-cols-[1fr_1fr]">
+          <FadeIn className="space-y-4">
+            <h2 className="text-3xl font-semibold text-charcoal">Our story</h2>
+            <p className="text-sm text-muted">
+              Based in Nairobi, Jolily Blooms Equator Limited was built to bridge Kenyan growers with global
+              wholesale markets. We curate dependable supply lines, manage export logistics, and keep buyers
+              informed at every stage.
+            </p>
+            <p className="text-sm text-muted">
+              Our team brings hands-on experience in flower sourcing, quality control, and freight
+              coordination. This ensures every shipment meets buyer specifications and arrives fresh.
+            </p>
+          </FadeIn>
+          <FadeIn className="rounded-3xl border border-border-soft bg-cream p-6 shadow-soft">
+            <Image
+              src="/images/hero-flowers.svg"
+              alt="Kenyan flower export team"
+              width={640}
+              height={480}
+              className="h-full w-full rounded-2xl object-cover"
+            />
+          </FadeIn>
+        </div>
+      </section>
+
+      <section className="bg-cream">
+        <div className="mx-auto grid w-full max-w-6xl gap-6 px-6 py-16 md:grid-cols-3">
+          {values.map((value) => (
+            <FadeIn key={value.title} className="rounded-2xl border border-border-soft bg-white p-6">
+              <h3 className="text-xl font-semibold text-charcoal">{value.title}</h3>
+              <p className="mt-2 text-sm text-muted">{value.description}</p>
+            </FadeIn>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-white">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-16">
+          <FadeIn className="space-y-4">
+            <h2 className="text-3xl font-semibold text-charcoal">Sourcing model</h2>
+            <p className="text-sm text-muted">
+              We consolidate from a trusted network of Kenyan farms, verifying variety quality, stem
+              lengths, and post-harvest handling. Buyers receive a weekly availability sheet, consolidated
+              billing, and a single logistics point of contact.
+            </p>
+          </FadeIn>
+          <FadeIn className="grid gap-6 rounded-3xl border border-border-soft bg-cream p-8 md:grid-cols-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Step 1</p>
+              <h3 className="mt-2 text-lg font-semibold text-charcoal">Confirm availability</h3>
+              <p className="mt-2 text-sm text-muted">
+                Receive weekly inventory, pricing, and lead time updates per variety.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Step 2</p>
+              <h3 className="mt-2 text-lg font-semibold text-charcoal">Consolidate & quality check</h3>
+              <p className="mt-2 text-sm text-muted">
+                Orders are graded, hydrated, and packed with export QA sign-off.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Step 3</p>
+              <h3 className="mt-2 text-lg font-semibold text-charcoal">Export dispatch</h3>
+              <p className="mt-2 text-sm text-muted">
+                Documentation, freight booking, and tracking shared end-to-end.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+    </div>
+  );
+}

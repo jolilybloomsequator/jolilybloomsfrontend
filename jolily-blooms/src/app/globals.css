@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-brand-pink: #c2185b;
+  --color-brand-magenta: #880e4f;
+  --color-cream: #fff8f9;
+  --color-pink-tint: #fce4ec;
+  --color-charcoal: #1a1a2e;
+  --color-medium-gray: #555555;
+  --color-success: #2e7d32;
+  --color-border-soft: #e6d9dd;
+  --shadow-soft: 0 18px 40px rgba(26, 26, 46, 0.12);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand: var(--color-brand-pink);
+  --color-brand-dark: var(--color-brand-magenta);
+  --color-cream: var(--color-cream);
+  --color-rose: var(--color-pink-tint);
+  --color-charcoal: var(--color-charcoal);
+  --color-muted: var(--color-medium-gray);
+  --color-success: var(--color-success);
+  --color-border-soft: var(--color-border-soft);
+  --shadow-soft: var(--shadow-soft);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+  --font-accent: var(--font-cormorant);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    line-height: 1.7;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-playfair);
+    line-height: 1.2;
+  }
+
+  ::selection {
+    background: var(--color-pink-tint);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .font-display {
+    font-family: var(--font-playfair);
+  }
+
+  .font-accent {
+    font-family: var(--font-cormorant);
+    font-style: italic;
+  }
+
+  .font-data {
+    font-family: var(--font-jetbrains);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
 }

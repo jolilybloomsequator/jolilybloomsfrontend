@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -20,10 +21,20 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border-soft bg-cream/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-lg font-semibold tracking-tight text-charcoal">
-          Jolily Blooms
-          <span className="block text-xs font-medium uppercase tracking-[0.24em] text-muted">
-            Equator Limited
+        <Link href="/" className="flex items-center gap-3 text-charcoal">
+          <Image
+            src="/images/jolily-logo.svg"
+            alt="Jolily Blooms logo"
+            width={44}
+            height={44}
+            className="h-11 w-11 shrink-0"
+            priority
+          />
+          <span className="text-lg font-semibold tracking-tight">
+            Jolily Blooms
+            <span className="block text-xs font-medium uppercase tracking-[0.24em] text-muted">
+              Equator Limited
+            </span>
           </span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-charcoal lg:flex">

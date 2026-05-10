@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { contactDetails } from "../data/contact";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -21,9 +22,9 @@ export default function SiteFooter() {
             Nairobi-based flower consolidator sourcing export-grade blooms from trusted Kenyan farms.
           </p>
           <div className="text-sm text-white/70">
-            <p>info@jolilybloomsequator.com</p>
-            <p>+254 700 000 000</p>
-            <p>JKIA Export Zone, Nairobi, Kenya</p>
+            <p>{contactDetails.email}</p>
+            <p>{contactDetails.phone}</p>
+            <p>{contactDetails.address}</p>
           </div>
         </div>
         <div>

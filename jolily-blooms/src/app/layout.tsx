@@ -36,6 +36,8 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const fontClasses = `${inter.variable} ${playfair.variable} ${cormorant.variable} ${jetbrains.variable}`;
+
 export const metadata: Metadata = {
   title: "Jolily Blooms Equator Limited",
   description:
@@ -60,10 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${playfair.variable} ${cormorant.variable} ${jetbrains.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${fontClasses} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-cream text-charcoal font-sans">
         <SiteHeader />
         <main className="flex-1">{children}</main>

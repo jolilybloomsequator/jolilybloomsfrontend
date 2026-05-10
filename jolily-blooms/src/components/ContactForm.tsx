@@ -36,7 +36,8 @@ const varietyOptions = [
 ];
 
 export default function ContactForm() {
-  const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ?? "";
+  const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
+  const isCaptchaConfigured = Boolean(siteKey);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [captchaToken, setCaptchaToken] = useState<string>("");
   const {
@@ -55,7 +56,7 @@ export default function ContactForm() {
 
   const onSubmit = async (values: InquiryFormValues) => {
     setStatus("idle");
-    if (!captchaToken || !siteKey) {
+    if (!captchaToken || !isCaptchaConfigured) {
       setStatus("error");
       return;
     }
@@ -178,9 +179,10 @@ export default function ContactForm() {
         Website
         <input type="text" {...register("website")} autoComplete="off" />
       </label>
+      <input type="hidden" {...register("hcaptchaToken")} />
 
       <div className="rounded-2xl border border-border-soft bg-white p-4 text-sm text-muted">
-        {siteKey ? (
+        {isCaptchaConfigured && siteKey ? (
           <HCaptcha
             sitekey={siteKey}
             onVerify={(token) => {
@@ -203,7 +205,7 @@ export default function ContactForm() {
       <div className="flex flex-wrap items-center gap-4">
         <button
           type="submit"
-          disabled={isSubmitting || !captchaToken || !siteKey}
+          disabled={isSubmitting || !captchaToken || !isCaptchaConfigured}
           className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting ? "Sending..." : "Submit Inquiry"}

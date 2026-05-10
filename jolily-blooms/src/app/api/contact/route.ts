@@ -23,6 +23,18 @@ const rateLimiter = redis
     })
   : null;
 
+const cleanupRateLimitStore = (now: number) => {
+  if (rateLimitStore.size < 500) {
+    return;
+  }
+
+  for (const [key, entry] of rateLimitStore.entries()) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+      rateLimitStore.delete(key);
+    }
+  }
+};
+
 const inquirySchema = z.object({
   fullName: z.string().min(2),
   companyName: z.string().min(2),
@@ -55,6 +67,7 @@ const checkRateLimit = async (ip: string) => {
   }
 
   const now = Date.now();
+  cleanupRateLimitStore(now);
   const entry = rateLimitStore.get(ip);
 
   if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {

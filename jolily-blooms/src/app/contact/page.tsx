@@ -2,6 +2,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import ContactForm from "../../components/ContactForm";
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
+import { contactDetails } from "../../data/contact";
 
 export default function ContactPage() {
   return (
@@ -23,15 +24,15 @@ export default function ContactPage() {
               <div className="mt-4 space-y-3 text-sm text-muted">
                 <div className="flex items-start gap-3">
                   <Mail className="mt-1 h-5 w-5 text-brand" />
-                  <span>info@jolilybloomsequator.com</span>
+                  <span>{contactDetails.email}</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone className="mt-1 h-5 w-5 text-brand" />
-                  <span>+254 700 000 000 (WhatsApp)</span>
+                  <span>{contactDetails.phone} (WhatsApp)</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="mt-1 h-5 w-5 text-brand" />
-                  <span>JKIA Export Zone, Nairobi, Kenya</span>
+                  <span>{contactDetails.address}</span>
                 </div>
               </div>
             </div>

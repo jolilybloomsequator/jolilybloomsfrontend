@@ -46,7 +46,7 @@
   }
 
   ::selection {
-    background: var(--pink-tint);
+    background: var(--color-pink-tint);
   }
 }
 

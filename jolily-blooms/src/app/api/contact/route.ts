@@ -1,6 +1,7 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import DOMPurify from "isomorphic-dompurify";
+import sgMail from "@sendgrid/mail";
 import { z } from "zod";
 
 type RateLimitEntry = {
@@ -45,7 +46,6 @@ const inquirySchema = z.object({
   estimatedVolume: z.string().min(1),
   message: z.string().min(10),
   website: z.string().optional(),
-  hcaptchaToken: z.string().optional(),
 });
 
 const sanitizeText = (value: string) =>
@@ -84,27 +84,6 @@ const checkRateLimit = async (ip: string) => {
   return true;
 };
 
-const verifyHCaptcha = async (token: string) => {
-  const secret = process.env.HCAPTCHA_SECRET;
-  if (!secret) {
-    return false;
-  }
-
-  const response = await fetch("https://hcaptcha.com/siteverify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({ secret, response: token }).toString(),
-  });
-
-  if (!response.ok) {
-    return false;
-  }
-
-  const data = (await response.json()) as { success?: boolean };
-  return Boolean(data.success);
-};
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);
@@ -124,15 +103,6 @@ export async function POST(request: Request) {
     return Response.json({ message: "Spam detected." }, { status: 400 });
   }
 
-  const captchaToken = parsed.data.hcaptchaToken ?? "";
-  if (!process.env.HCAPTCHA_SECRET) {
-    return Response.json({ message: "Captcha verification unavailable." }, { status: 503 });
-  }
-
-  if (!(await verifyHCaptcha(captchaToken))) {
-    return Response.json({ message: "Captcha verification failed." }, { status: 400 });
-  }
-
   const sanitizedPayload = {
     fullName: sanitizeText(parsed.data.fullName),
     companyName: sanitizeText(parsed.data.companyName),
@@ -146,6 +116,42 @@ export async function POST(request: Request) {
 
   if (!sanitizedPayload.fullName || !sanitizedPayload.message) {
     return Response.json({ message: "Invalid submission." }, { status: 400 });
+  }
+
+  // Send email via SendGrid if configured. Accept SENDGRID_API_KEY or fallback to EMAIL_HOST_PASSWORD.
+  const sgApiKey = process.env.SENDGRID_API_KEY ?? process.env.EMAIL_HOST_PASSWORD;
+  if (sgApiKey && process.env.CONTACT_TO_EMAIL && process.env.SENDGRID_FROM_EMAIL) {
+    try {
+      sgMail.setApiKey(sgApiKey);
+      const emailText = `
+New inquiry from ${sanitizedPayload.fullName}
+Company: ${sanitizedPayload.companyName}
+Country: ${sanitizedPayload.country}
+Email: ${sanitizedPayload.email}
+WhatsApp: ${sanitizedPayload.whatsapp}
+Varieties: ${sanitizedPayload.varieties.join(", ")}
+Estimated Volume: ${sanitizedPayload.estimatedVolume}
+
+Message:
+${sanitizedPayload.message}
+      `;
+
+      await sgMail.send({
+        to: process.env.CONTACT_TO_EMAIL,
+        from: process.env.SENDGRID_FROM_EMAIL,
+        replyTo: process.env.SENDGRID_REPLY_TO ?? sanitizedPayload.email,
+        subject: `New inquiry: ${sanitizedPayload.companyName} — ${sanitizedPayload.fullName}`,
+        text: emailText,
+        html: emailText.replace(/\n/g, "<br/>"),
+      });
+    } catch (err) {
+      // Log the error and return a server error so the client knows sending failed
+      console.error("SendGrid error:", err);
+      return Response.json({ message: "Failed to send email." }, { status: 500 });
+    }
+  } else {
+    // SendGrid not configured — log a note for debugging
+    console.warn("SendGrid not configured. Add SENDGRID_API_KEY and CONTACT_TO_EMAIL to env.");
   }
 
   return Response.json({ success: true, data: sanitizedPayload });

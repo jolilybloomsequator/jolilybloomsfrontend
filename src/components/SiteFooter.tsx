@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import useIsAdminRoute from "@/hooks/useIsAdminRoute";
 import { contactDetails } from "../data/contact";
 
 const quickLinks = [
@@ -16,8 +16,7 @@ const quickLinks = [
 ];
 
 export default function SiteFooter() {
-  const pathname = usePathname();
-  const isAdminRoute = pathname.startsWith("/admin");
+  const isAdminRoute = useIsAdminRoute();
 
   if (isAdminRoute) {
     return null;

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import useIsAdminRoute from "@/hooks/useIsAdminRoute";
 import { useState } from "react";
 
 const navigation = [
@@ -17,9 +17,8 @@ const navigation = [
 ];
 
 export default function SiteHeader() {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const isAdminRoute = pathname.startsWith("/admin");
+  const isAdminRoute = useIsAdminRoute();
 
   if (isAdminRoute) {
     return null;

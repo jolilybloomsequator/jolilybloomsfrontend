@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { FlowerItem } from "@/data/flowers";
 
@@ -10,8 +10,7 @@ export default function AdminFlowerList() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
 
-  const loadFlowers = useCallback(async () => {
-    setLoading(true);
+  const loadFlowers = async () => {
     setMessage("");
 
     try {
@@ -28,11 +27,40 @@ export default function AdminFlowerList() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
-    void loadFlowers();
-  }, [loadFlowers]);
+    let cancelled = false;
+
+    const loadInitialFlowers = async () => {
+      try {
+        const response = await fetch("/api/admin/flowers");
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || "Failed to fetch flowers");
+        }
+
+        const data = (await response.json()) as FlowerItem[];
+        if (!cancelled) {
+          setFlowers(Array.isArray(data) ? data : []);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setMessage(`✗ ${error instanceof Error ? error.message : "Failed to fetch flowers"}`);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    void loadInitialFlowers();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleDelete = async (id: string) => {
     const confirmed = window.confirm("Delete this flower from the catalogue?");
@@ -73,7 +101,10 @@ export default function AdminFlowerList() {
         </div>
         <button
           type="button"
-          onClick={() => void loadFlowers()}
+          onClick={() => {
+            setLoading(true);
+            void loadFlowers();
+          }}
           className="rounded-lg border border-brand px-4 py-2 text-sm font-semibold text-brand transition hover:border-brand-dark hover:text-brand-dark"
         >
           Refresh

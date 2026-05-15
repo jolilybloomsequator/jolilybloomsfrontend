@@ -5,7 +5,7 @@ import {
   FLOWER_CATALOGUE_OBJECT_PATH,
   createSupabaseAdminClient,
   sanitizeFilename,
-} from "@/lib/supabaseStorage";
+} from "../../../../../lib/supabaseStorage";
 
 function verifyAuth(request: NextRequest): boolean {
   const sessionCookie = request.cookies.get("admin_session");

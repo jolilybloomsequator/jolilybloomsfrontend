@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { flowerCatalogue } from "@/data/flowers";
-import { FLOWER_CATALOGUE_OBJECT_PATH, createSupabaseAdminClient } from "@/lib/supabaseStorage";
+import {
+  FLOWER_CATALOGUE_OBJECT_PATH,
+  createSupabaseAdminClient,
+} from "../../../lib/supabaseStorage";
 
 export async function GET() {
   try {

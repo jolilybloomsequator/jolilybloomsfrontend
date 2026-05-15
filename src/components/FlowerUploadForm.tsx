@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { MAX_FLOWER_IMAGE_SIZE_BYTES, MAX_FLOWER_IMAGE_SIZE_MB } from "@/lib/adminUpload";
 
 export default function FlowerUploadForm() {
   const [loading, setLoading] = useState(false);
@@ -22,9 +23,22 @@ export default function FlowerUploadForm() {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      setImageFile(e.target.files[0]);
+    const selectedFile = e.target.files?.[0];
+
+    if (!selectedFile) {
+      setImageFile(null);
+      return;
     }
+
+    if (selectedFile.size > MAX_FLOWER_IMAGE_SIZE_BYTES) {
+      setImageFile(null);
+      e.target.value = "";
+      setMessage(`✗ Image is too large. Maximum file size is ${MAX_FLOWER_IMAGE_SIZE_MB}MB.`);
+      return;
+    }
+
+    setImageFile(selectedFile);
+    setMessage("");
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,91 +85,147 @@ export default function FlowerUploadForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 border rounded">
-      <h2 className="text-2xl font-bold mb-4">Add Flower</h2>
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-3xl rounded-3xl border border-border-soft bg-white p-8 shadow-soft">
+      <h2 className="text-3xl font-bold text-charcoal">Add Flower</h2>
+      <p className="mt-2 text-sm text-muted">
+        Upload a flower image and metadata for your storefront catalogue.
+      </p>
+      <p className="mt-2 rounded-lg bg-rose px-3 py-2 text-sm font-medium text-charcoal">
+        Maximum image upload size: {MAX_FLOWER_IMAGE_SIZE_MB}MB
+      </p>
 
-      <input
-        type="text"
-        name="id"
-        placeholder="ID (e.g., sweet-avalanche)"
-        value={formData.id}
-        onChange={handleInputChange}
-        required
-        className="w-full mb-2 p-2 border rounded"
-      />
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div>
+          <label htmlFor="id" className="mb-1 block text-sm font-medium text-charcoal">
+            ID
+          </label>
+          <input
+            id="id"
+            type="text"
+            name="id"
+            placeholder="e.g., sweet-avalanche"
+            value={formData.id}
+            onChange={handleInputChange}
+            required
+            className="w-full rounded-lg border border-border-soft px-3 py-2"
+          />
+        </div>
 
-      <input
-        type="text"
-        name="name"
-        placeholder="Flower Name"
-        value={formData.name}
-        onChange={handleInputChange}
-        required
-        className="w-full mb-2 p-2 border rounded"
-      />
+        <div>
+          <label htmlFor="name" className="mb-1 block text-sm font-medium text-charcoal">
+            Flower Name
+          </label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Flower name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            className="w-full rounded-lg border border-border-soft px-3 py-2"
+          />
+        </div>
 
-      <input
-        type="text"
-        name="botanicalName"
-        placeholder="Botanical Name"
-        value={formData.botanicalName}
-        onChange={handleInputChange}
-        required
-        className="w-full mb-2 p-2 border rounded"
-      />
+        <div>
+          <label htmlFor="botanicalName" className="mb-1 block text-sm font-medium text-charcoal">
+            Botanical Name
+          </label>
+          <input
+            id="botanicalName"
+            type="text"
+            name="botanicalName"
+            placeholder="Botanical name"
+            value={formData.botanicalName}
+            onChange={handleInputChange}
+            required
+            className="w-full rounded-lg border border-border-soft px-3 py-2"
+          />
+        </div>
 
-      <input
-        type="text"
-        name="stemLength"
-        placeholder="Stem Length (e.g., 40-70 cm)"
-        value={formData.stemLength}
-        onChange={handleInputChange}
-        required
-        className="w-full mb-2 p-2 border rounded"
-      />
+        <div>
+          <label htmlFor="stemLength" className="mb-1 block text-sm font-medium text-charcoal">
+            Stem Length
+          </label>
+          <input
+            id="stemLength"
+            type="text"
+            name="stemLength"
+            placeholder="e.g., 40-70 cm"
+            value={formData.stemLength}
+            onChange={handleInputChange}
+            required
+            className="w-full rounded-lg border border-border-soft px-3 py-2"
+          />
+        </div>
 
-      <select
-        name="category"
-        value={formData.category}
-        onChange={handleInputChange}
-        className="w-full mb-2 p-2 border rounded"
-      >
-        <option value="Feature Flower">Feature Flower</option>
-        <option value="Filler">Filler</option>
-        <option value="Foliage">Foliage</option>
-      </select>
+        <div>
+          <label htmlFor="category" className="mb-1 block text-sm font-medium text-charcoal">
+            Category
+          </label>
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            className="w-full rounded-lg border border-border-soft px-3 py-2"
+          >
+            <option value="Feature Flower">Feature Flower</option>
+            <option value="Filler">Filler</option>
+            <option value="Foliage">Foliage</option>
+          </select>
+        </div>
 
-      <input
-        type="text"
-        name="color"
-        placeholder="Color"
-        value={formData.color}
-        onChange={handleInputChange}
-        required
-        className="w-full mb-2 p-2 border rounded"
-      />
+        <div>
+          <label htmlFor="color" className="mb-1 block text-sm font-medium text-charcoal">
+            Color
+          </label>
+          <input
+            id="color"
+            type="text"
+            name="color"
+            placeholder="Color"
+            value={formData.color}
+            onChange={handleInputChange}
+            required
+            className="w-full rounded-lg border border-border-soft px-3 py-2"
+          />
+        </div>
 
-      <select
-        name="availability"
-        value={formData.availability}
-        onChange={handleInputChange}
-        className="w-full mb-2 p-2 border rounded"
-      >
-        <option value="Year-Round">Year-Round</option>
-        <option value="Seasonal">Seasonal</option>
-      </select>
+        <div>
+          <label htmlFor="availability" className="mb-1 block text-sm font-medium text-charcoal">
+            Availability
+          </label>
+          <select
+            id="availability"
+            name="availability"
+            value={formData.availability}
+            onChange={handleInputChange}
+            className="w-full rounded-lg border border-border-soft px-3 py-2"
+          >
+            <option value="Year-Round">Year-Round</option>
+            <option value="Seasonal">Seasonal</option>
+          </select>
+        </div>
+      </div>
 
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="w-full mb-2 p-2 border rounded"
-      />
+      <div className="mt-4">
+        <label htmlFor="image" className="mb-1 block text-sm font-medium text-charcoal">
+          Flower Image
+        </label>
+        <input
+          id="image"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full rounded-lg border border-border-soft px-3 py-2"
+        />
+      </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 disabled:bg-gray-400"
+        className="mt-6 w-full rounded-lg bg-brand px-4 py-3 font-medium text-white transition hover:bg-brand-dark disabled:bg-gray-400"
       >
         {loading ? "Uploading..." : "Add Flower"}
       </button>

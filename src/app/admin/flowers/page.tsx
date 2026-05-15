@@ -1,5 +1,5 @@
 import FlowerUploadForm from "@/components/FlowerUploadForm";
-import Link from "next/link";
+import AdminLogoutButton from "@/components/AdminLogoutButton";
 
 export default function AdminFlowersPage() {
   return (
@@ -7,18 +7,7 @@ export default function AdminFlowersPage() {
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold">Flower Management</h1>
-          <Link
-            href="/admin/login"
-            onClick={(e) => {
-              e.preventDefault();
-              fetch("/api/admin/logout", { method: "POST" }).then(() => {
-                window.location.href = "/admin/login";
-              });
-            }}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          >
-            Logout
-          </Link>
+          <AdminLogoutButton />
         </div>
 
         <FlowerUploadForm />

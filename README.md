@@ -96,3 +96,24 @@ public/
 ## Deployment
 
 The app can be deployed on any platform that supports Next.js. Vercel is the simplest option, but the production build is standard Next.js and can run anywhere Node.js is available.
+
+## Admin Setup
+
+Admin features (adding flowers and uploading images) are managed through the built-in admin UI.
+
+- Set environment variables in `.env.local`:
+	- `ADMIN_EMAIL=info@jolilybloomsequator.com`
+	- `ADMIN_PASSWORD=PrincessRhea2023!`
+- Admin UI:
+	- Login page: `/admin/login`
+	- Management dashboard: `/admin/flowers`
+	- Upload endpoint: `POST /api/admin/flowers/upload` (multipart/form-data with `flower` JSON and optional `image` file)
+	- Login endpoint: `POST /api/admin/login`
+	- Logout endpoint: `POST /api/admin/logout`
+- Storage and files:
+	- Flower metadata is stored in `src/data/flowers.json`.
+	- Uploaded images are saved to `public/images/flowers/` and served at `/images/flowers/[filename]`.
+
+Notes:
+- The admin UI requires the `admin_session` cookie which is set after a successful login.
+- For production, consider using secure secret management for admin credentials and an external image storage (S3, Cloudinary, Vercel Blob).

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFileSync, readFileSync } from "fs";
-import { join } from "path";
 import { FlowerItem } from "@/data/flowers";
 import { MAX_FLOWER_IMAGE_SIZE_BYTES, MAX_FLOWER_IMAGE_SIZE_MB } from "@/lib/adminUpload";
-
-const FLOWERS_DB_PATH = join(process.cwd(), "src/data/flowers.json");
-const IMAGES_DIR = join(process.cwd(), "public/images/flowers");
+import {
+  FLOWER_CATALOGUE_OBJECT_PATH,
+  createSupabaseAdminClient,
+  sanitizeFilename,
+} from "@/lib/supabaseStorage";
 
 function verifyAuth(request: NextRequest): boolean {
   const sessionCookie = request.cookies.get("admin_session");
@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const { client: supabase, bucket } = createSupabaseAdminClient();
     const formData = await request.formData();
     const file = formData.get("image") as File;
     const flowerData = formData.get("flower") as string;
@@ -40,8 +41,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Handle image upload if provided
-    let imageFilename = flower.image || `${flower.id}.jpg`;
+    // Handle image upload (stored in Supabase Storage)
+    let imageValue = flower.image ?? "";
     if (file) {
       if (file.size > MAX_FLOWER_IMAGE_SIZE_BYTES) {
         return NextResponse.json(
@@ -50,25 +51,50 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const buffer = await file.arrayBuffer();
-      const filename = `${flower.id}-${Date.now()}${file.name.substring(file.name.lastIndexOf("."))}`;
-      const filepath = join(IMAGES_DIR, filename);
+      const extension = file.name.includes(".")
+        ? file.name.substring(file.name.lastIndexOf("."))
+        : "";
+      const storagePath = `images/${sanitizeFilename(flower.id)}-${Date.now()}${extension}`;
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
 
-      try {
-        writeFileSync(filepath, Buffer.from(buffer));
-        imageFilename = filename;
-        flower.image = filename;
-      } catch (fileError) {
-        console.error("File write error:", fileError);
+      const { error: uploadError } = await supabase.storage
+        .from(bucket)
+        .upload(storagePath, fileBuffer, {
+          contentType: file.type || "application/octet-stream",
+          upsert: false,
+        });
+
+      if (uploadError) {
+        console.error("Supabase upload error:", uploadError);
         return NextResponse.json(
-          { error: "Failed to save image file" },
+          { error: "Failed to upload image to storage" },
           { status: 500 }
         );
       }
+
+      const { data: publicUrlData } = supabase.storage
+        .from(bucket)
+        .getPublicUrl(storagePath);
+
+      imageValue = publicUrlData.publicUrl;
+      flower.image = imageValue;
     }
 
-    // Update flowers.json with new/updated flower data
-    const flowers = JSON.parse(readFileSync(FLOWERS_DB_PATH, "utf-8")) as FlowerItem[];
+    // Load existing catalogue from Supabase Storage (or start empty)
+    let flowers: FlowerItem[] = [];
+    const { data: existingCatalogueBlob, error: downloadError } = await supabase.storage
+      .from(bucket)
+      .download(FLOWER_CATALOGUE_OBJECT_PATH);
+
+    if (existingCatalogueBlob && !downloadError) {
+      try {
+        flowers = (JSON.parse(await existingCatalogueBlob.text()) as FlowerItem[]) ?? [];
+      } catch (parseError) {
+        console.warn("Failed to parse existing catalogue JSON, starting fresh.", parseError);
+      }
+    }
+
+    // Upsert flower metadata in catalogue
     const existingIndex = flowers.findIndex(f => f.id === flower.id);
     
     if (existingIndex >= 0) {
@@ -77,16 +103,30 @@ export async function POST(request: NextRequest) {
       flowers.push(flower);
     }
 
-    writeFileSync(FLOWERS_DB_PATH, JSON.stringify(flowers, null, 2), "utf-8");
+    const catalogueBuffer = Buffer.from(JSON.stringify(flowers, null, 2));
+    const { error: catalogueUploadError } = await supabase.storage
+      .from(bucket)
+      .upload(FLOWER_CATALOGUE_OBJECT_PATH, catalogueBuffer, {
+        contentType: "application/json",
+        upsert: true,
+      });
+
+    if (catalogueUploadError) {
+      console.error("Supabase catalogue upload error:", catalogueUploadError);
+      return NextResponse.json(
+        { error: "Failed to save flower metadata" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
-      { success: true, flower: { ...flower, image: imageFilename } },
+      { success: true, flower: { ...flower, image: imageValue || flower.image } },
       { status: 200 }
     );
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json(
-      { error: "Failed to upload flower" },
+      { error: "Failed to upload flower. Check Supabase env configuration." },
       { status: 500 }
     );
   }

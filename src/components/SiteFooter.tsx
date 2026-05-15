@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import useIsAdminRoute from "@/hooks/useIsAdminRoute";
 import { contactDetails } from "../data/contact";
 
 const quickLinks = [
@@ -13,6 +16,12 @@ const quickLinks = [
 ];
 
 export default function SiteFooter() {
+  const isAdminRoute = useIsAdminRoute();
+
+  if (isAdminRoute) {
+    return null;
+  }
+
   return (
     <footer className="bg-charcoal text-white">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1.4fr_1fr_1fr]">

@@ -1,10 +1,19 @@
+"use client";
+
 import { MessageCircle } from "lucide-react";
+import useIsAdminRoute from "@/hooks/useIsAdminRoute";
 import { contactDetails } from "../data/contact";
 
 const whatsappMessage =
   "Hi Jolily Blooms, I am interested in placing a flower order.";
 
 export default function WhatsAppButton() {
+  const isAdminRoute = useIsAdminRoute();
+
+  if (isAdminRoute) {
+    return null;
+  }
+
   return (
     <a
       href={`https://wa.me/${contactDetails.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}

@@ -1,1 +1,0 @@
-Removed hCaptcha from client and server; ensure spam protection and monitoring are in place.

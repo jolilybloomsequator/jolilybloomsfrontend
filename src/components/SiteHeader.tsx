@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navigation = [
@@ -16,7 +17,13 @@ const navigation = [
 ];
 
 export default function SiteHeader() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const isAdminRoute = pathname.startsWith("/admin");
+
+  if (isAdminRoute) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border-soft bg-cream/90 backdrop-blur">

@@ -1,5 +1,6 @@
 import FlowerUploadForm from "@/components/FlowerUploadForm";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
+import AdminFlowerList from "@/components/AdminFlowerList";
 
 export default function AdminFlowersPage() {
   return (
@@ -17,6 +18,7 @@ export default function AdminFlowersPage() {
         </div>
 
         <FlowerUploadForm />
+        <AdminFlowerList />
       </div>
     </div>
   );

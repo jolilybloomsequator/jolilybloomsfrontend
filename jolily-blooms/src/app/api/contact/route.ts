@@ -1,7 +1,7 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import DOMPurify from "isomorphic-dompurify";
-import sgMail from "@sendgrid/mail";
+import * as nodemailer from "nodemailer";
 import { z } from "zod";
 
 type RateLimitEntry = {
@@ -84,6 +84,27 @@ const checkRateLimit = async (ip: string) => {
   return true;
 };
 
+const buildEmailText = (payload: {
+  fullName: string;
+  companyName: string;
+  country: string;
+  email: string;
+  whatsapp: string;
+  varieties: string[];
+  estimatedVolume: string;
+  message: string;
+}) => `
+New inquiry from ${payload.fullName}
+Company: ${payload.companyName}
+Country: ${payload.country}
+Email: ${payload.email}
+WhatsApp: ${payload.whatsapp}
+Varieties: ${payload.varieties.join(", ")}
+Estimated Volume: ${payload.estimatedVolume}
+
+Message:
+${payload.message}
+`;
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);
@@ -118,40 +139,64 @@ export async function POST(request: Request) {
     return Response.json({ message: "Invalid submission." }, { status: 400 });
   }
 
-  // Send email via SendGrid if configured. Accept SENDGRID_API_KEY or fallback to EMAIL_HOST_PASSWORD.
-  const sgApiKey = process.env.SENDGRID_API_KEY ?? process.env.EMAIL_HOST_PASSWORD;
-  if (sgApiKey && process.env.CONTACT_TO_EMAIL && process.env.SENDGRID_FROM_EMAIL) {
+  const contactToEmail = process.env.CONTACT_TO_EMAIL;
+  const fromEmail = process.env.EMAIL_FROM_EMAIL;
+  const smtpHost = process.env.EMAIL_HOST;
+  const smtpPort = Number(process.env.EMAIL_PORT ?? "0");
+  const smtpUser = process.env.EMAIL_HOST_USER;
+  const smtpPassword = process.env.EMAIL_HOST_PASSWORD;
+  const smtpUseSsl = process.env.EMAIL_USE_SSL === "True";
+  const smtpUseTls = process.env.EMAIL_USE_TLS === "True";
+  const emailText = buildEmailText(sanitizedPayload);
+
+  const canUseSmtp = Boolean(
+    contactToEmail &&
+      fromEmail &&
+      smtpHost &&
+      smtpPort &&
+      smtpUser &&
+      smtpPassword
+  );
+
+  if (canUseSmtp) {
     try {
-      sgMail.setApiKey(sgApiKey);
-      const emailText = `
-New inquiry from ${sanitizedPayload.fullName}
-Company: ${sanitizedPayload.companyName}
-Country: ${sanitizedPayload.country}
-Email: ${sanitizedPayload.email}
-WhatsApp: ${sanitizedPayload.whatsapp}
-Varieties: ${sanitizedPayload.varieties.join(", ")}
-Estimated Volume: ${sanitizedPayload.estimatedVolume}
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpUseSsl || smtpPort === 465,
+        auth: {
+          user: smtpUser,
+          pass: smtpPassword,
+        },
+        requireTLS: smtpUseTls,
+      });
 
-Message:
-${sanitizedPayload.message}
-      `;
-
-      await sgMail.send({
-        to: process.env.CONTACT_TO_EMAIL,
-        from: process.env.SENDGRID_FROM_EMAIL,
-        replyTo: process.env.SENDGRID_REPLY_TO ?? sanitizedPayload.email,
+      await transporter.sendMail({
+        to: contactToEmail,
+        from: fromEmail,
+        replyTo: sanitizedPayload.email,
         subject: `New inquiry: ${sanitizedPayload.companyName} — ${sanitizedPayload.fullName}`,
         text: emailText,
-        html: emailText.replace(/\n/g, "<br/>"),
+        html: emailText.replace(/\n/g, "<br/>") ,
       });
     } catch (err) {
-      // Log the error and return a server error so the client knows sending failed
-      console.error("SendGrid error:", err);
+      console.error("SMTP error:", err);
       return Response.json({ message: "Failed to send email." }, { status: 500 });
     }
   } else {
-    // SendGrid not configured — log a note for debugging
-    console.warn("SendGrid not configured. Add SENDGRID_API_KEY and CONTACT_TO_EMAIL to env.");
+    const missing: string[] = [];
+    if (!contactToEmail) missing.push("CONTACT_TO_EMAIL");
+    if (!fromEmail) missing.push("EMAIL_FROM_EMAIL");
+    if (!smtpHost) missing.push("EMAIL_HOST");
+    if (!smtpPort) missing.push("EMAIL_PORT");
+    if (!smtpUser) missing.push("EMAIL_HOST_USER");
+    if (!smtpPassword) missing.push("EMAIL_HOST_PASSWORD");
+
+    console.warn(`SMTP email not configured. Missing: ${missing.join(", ")}.`);
+    return Response.json(
+      { message: "Email service not configured.", missing },
+      { status: 503 }
+    );
   }
 
   return Response.json({ success: true, data: sanitizedPayload });

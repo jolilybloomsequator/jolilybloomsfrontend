@@ -140,7 +140,7 @@ export async function POST(request: Request) {
   }
 
   const contactToEmail = process.env.CONTACT_TO_EMAIL;
-  const fromEmail = process.env.EMAIL_FROM_EMAIL;
+  const fromEmail = process.env.EMAIL_FROM;
   const smtpHost = process.env.EMAIL_HOST;
   const smtpPort = Number(process.env.EMAIL_PORT ?? "0");
   const smtpUser = process.env.EMAIL_HOST_USER;
@@ -186,7 +186,7 @@ export async function POST(request: Request) {
   } else {
     const missing: string[] = [];
     if (!contactToEmail) missing.push("CONTACT_TO_EMAIL");
-    if (!fromEmail) missing.push("EMAIL_FROM_EMAIL");
+    if (!fromEmail) missing.push("EMAIL_FROM");
     if (!smtpHost) missing.push("EMAIL_HOST");
     if (!smtpPort) missing.push("EMAIL_PORT");
     if (!smtpUser) missing.push("EMAIL_HOST_USER");

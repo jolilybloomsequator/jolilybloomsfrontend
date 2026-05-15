@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFileSync, readFileSync } from "fs";
 import { join } from "path";
-import { flowerCatalogue, FlowerItem } from "@/data/flowers";
+import { FlowerItem } from "@/data/flowers";
+import { MAX_FLOWER_IMAGE_SIZE_BYTES, MAX_FLOWER_IMAGE_SIZE_MB } from "@/lib/adminUpload";
 
 const FLOWERS_DB_PATH = join(process.cwd(), "src/data/flowers.json");
 const IMAGES_DIR = join(process.cwd(), "public/images/flowers");
@@ -42,6 +43,13 @@ export async function POST(request: NextRequest) {
     // Handle image upload if provided
     let imageFilename = flower.image || `${flower.id}.jpg`;
     if (file) {
+      if (file.size > MAX_FLOWER_IMAGE_SIZE_BYTES) {
+        return NextResponse.json(
+          { error: `Image file too large. Maximum allowed size is ${MAX_FLOWER_IMAGE_SIZE_MB}MB.` },
+          { status: 413 }
+        );
+      }
+
       const buffer = await file.arrayBuffer();
       const filename = `${flower.id}-${Date.now()}${file.name.substring(file.name.lastIndexOf("."))}`;
       const filepath = join(IMAGES_DIR, filename);

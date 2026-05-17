@@ -141,10 +141,10 @@ export async function POST(request: Request) {
 
   const contactToEmail = process.env.CONTACT_TO_EMAIL;
   const fromEmail = process.env.EMAIL_FROM;
-  const smtpHost = process.env.EMAIL_HOST;
-  const smtpPort = Number(process.env.EMAIL_PORT ?? "0");
-  const smtpUser = process.env.EMAIL_HOST_USER;
-  const smtpPassword = process.env.EMAIL_HOST_PASSWORD;
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpPort = Number(process.env.SMTP_PORT ?? "0");
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPassword = process.env.SMTP_PASS;
   const smtpUseSsl = process.env.EMAIL_USE_SSL === "True";
   const smtpUseTls = process.env.EMAIL_USE_TLS === "True";
   const emailText = buildEmailText(sanitizedPayload);
@@ -187,10 +187,10 @@ export async function POST(request: Request) {
     const missing: string[] = [];
     if (!contactToEmail) missing.push("CONTACT_TO_EMAIL");
     if (!fromEmail) missing.push("EMAIL_FROM");
-    if (!smtpHost) missing.push("EMAIL_HOST");
-    if (!smtpPort) missing.push("EMAIL_PORT");
-    if (!smtpUser) missing.push("EMAIL_HOST_USER");
-    if (!smtpPassword) missing.push("EMAIL_HOST_PASSWORD");
+    if (!smtpHost) missing.push("SMTP_HOST");
+    if (!smtpPort) missing.push("SMTP_PORT");
+    if (!smtpUser) missing.push("SMTP_USER");
+    if (!smtpPassword) missing.push("SMTP_PASS");
 
     console.warn(`SMTP email not configured. Missing: ${missing.join(", ")}.`);
     return Response.json(

@@ -68,8 +68,8 @@ export default function SiteHeader() {
       </div>
       <AnimatePresence>
         {isOpen ? (
-          <motion.div
-            className="fixed inset-0 z-50 flex h-full w-full flex-col bg-charcoal/90 backdrop-blur"
+            <motion.div
+              className="fixed inset-0 z-50 flex h-full w-full flex-col bg-charcoal backdrop-blur"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

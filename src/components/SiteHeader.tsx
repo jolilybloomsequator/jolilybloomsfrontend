@@ -31,8 +31,8 @@ export default function SiteHeader() {
           <Image
             src="/images/jolily-blooms.svg"
             alt="Jolily Blooms logo"
-            width={44}
-            height={44}
+            width={56}
+            height={56}
             className="h-11 w-11 shrink-0"
             priority
           />

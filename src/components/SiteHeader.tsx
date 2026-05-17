@@ -29,7 +29,7 @@ export default function SiteHeader() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 text-charcoal">
           <Image
-            src="/images/jolily-logo.svg"
+            src="/images/jolily-blooms.svg"
             alt="Jolily Blooms logo"
             width={44}
             height={44}

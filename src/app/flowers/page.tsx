@@ -1,29 +1,79 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
-import { flowerCatalogue } from "../../data/flowers";
+import { flowerCatalogue, type FlowerItem } from "../../data/flowers";
 
-const categories = ["All", ...new Set(flowerCatalogue.map((flower) => flower.category))];
-const colors = ["All", ...new Set(flowerCatalogue.map((flower) => flower.color))];
 const availabilityOptions = ["All", "Year-Round", "Seasonal"];
 
+function mergeFlowerCatalogues(base: FlowerItem[], incoming: FlowerItem[]) {
+  const map = new Map<string, FlowerItem>();
+
+  for (const flower of base) {
+    map.set(flower.id, flower);
+  }
+
+  for (const flower of incoming) {
+    if (typeof flower?.id === "string" && flower.id.trim().length > 0) {
+      map.set(flower.id, flower);
+    }
+  }
+
+  return Array.from(map.values());
+}
+
 export default function FlowersPage() {
+  const [flowers, setFlowers] = useState<FlowerItem[]>(flowerCatalogue);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedColor, setSelectedColor] = useState("All");
   const [selectedAvailability, setSelectedAvailability] = useState("All");
 
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadFlowers = async () => {
+      try {
+        const response = await fetch("/api/flowers");
+        if (!response.ok) {
+          return;
+        }
+
+        const data = (await response.json()) as FlowerItem[];
+        if (!cancelled && Array.isArray(data)) {
+          setFlowers(mergeFlowerCatalogues(flowerCatalogue, data));
+        }
+      } catch {
+        // Keep local fallback data.
+      }
+    };
+
+    void loadFlowers();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const categories = useMemo(
+    () => ["All", ...new Set(flowers.map((flower) => flower.category))],
+    [flowers],
+  );
+  const colors = useMemo(
+    () => ["All", ...new Set(flowers.map((flower) => flower.color))],
+    [flowers],
+  );
+
   const filteredFlowers = useMemo(() => {
-    return flowerCatalogue.filter((flower) => {
+    return flowers.filter((flower) => {
       const categoryMatch = selectedCategory === "All" || flower.category === selectedCategory;
       const colorMatch = selectedColor === "All" || flower.color === selectedColor;
       const availabilityMatch =
         selectedAvailability === "All" || flower.availability === selectedAvailability;
       return categoryMatch && colorMatch && availabilityMatch;
     });
-  }, [selectedCategory, selectedColor, selectedAvailability]);
+  }, [flowers, selectedCategory, selectedColor, selectedAvailability]);
 
   return (
     <div>

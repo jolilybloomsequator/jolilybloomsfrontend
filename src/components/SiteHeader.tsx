@@ -35,10 +35,10 @@ export default function SiteHeader() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 text-charcoal">
           <Image
-            src="/images/jolily-logo.png"
+            src="/images/jolily-blooms.svg"
             alt="Jolily Blooms logo"
-            width={44}
-            height={44}
+            width={56}
+            height={56}
             className="h-11 w-11 shrink-0"
             priority
           />
@@ -86,8 +86,8 @@ export default function SiteHeader() {
       </div>
       <AnimatePresence>
         {isOpen ? (
-          <motion.div
-            className="fixed inset-0 z-50 flex h-full w-full flex-col bg-charcoal/90 backdrop-blur"
+            <motion.div
+              className="fixed inset-0 z-50 flex h-full w-full flex-col bg-charcoal backdrop-blur"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

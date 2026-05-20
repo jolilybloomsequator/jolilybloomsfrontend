@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section className="bg-cream">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="mx-auto flex w-full max-w-6xl gap-10 px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,24 +54,6 @@ export default function Hero() {
               <p className="text-2xl font-semibold text-charcoal">95%</p>
               <p>Cold chain compliance</p>
             </div>
-          </div>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="relative"
-        >
-          <div className="absolute -left-6 -top-6 h-full w-full rounded-[32px] bg-rose" />
-          <div className="relative overflow-hidden rounded-[32px] bg-white shadow-soft">
-            <Image
-              src="/images/hero-flowers.svg"
-              alt="Assorted export-grade Kenyan flowers"
-              width={720}
-              height={560}
-              className="h-full w-full object-cover"
-              priority
-            />
           </div>
         </motion.div>
       </div>

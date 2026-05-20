@@ -4,21 +4,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import useIsAdminRoute from "@/hooks/useIsAdminRoute";
 import { useState } from "react";
 
 const navigation = [
   { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
   { label: "Flowers", href: "/flowers" },
   { label: "Quality", href: "/quality" },
   { label: "Logistics", href: "/logistics" },
-  { label: "About", href: "/about" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Privacy", href: "/privacy" },
   { label: "Contact", href: "/contact" },
 ];
 
 export default function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
   const isAdminRoute = useIsAdminRoute();
+
+  const isActive = (href: string) => pathname === href;
 
   if (isAdminRoute) {
     return null;
@@ -29,7 +35,7 @@ export default function SiteHeader() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 text-charcoal">
           <Image
-            src="/images/jolily-logo.svg"
+            src="/images/jolily-logo.png"
             alt="Jolily Blooms logo"
             width={44}
             height={44}
@@ -45,13 +51,25 @@ export default function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-charcoal lg:flex">
           {navigation.slice(0, -1).map((item) => (
-            <Link key={item.href} href={item.href} className="transition hover:text-brand">
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`transition ${
+                isActive(item.href)
+                  ? "rounded-full bg-brand px-3 py-1 text-white"
+                  : "hover:text-brand"
+              }`}
+            >
               {item.label}
             </Link>
           ))}
           <Link
             href="/contact"
-            className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-dark"
+            className={`rounded-full px-5 py-2 text-sm font-semibold transition shadow-soft ${
+              isActive("/contact")
+                ? "bg-brand-dark text-white"
+                : "bg-brand text-white hover:bg-brand-dark"
+            }`}
           >
             Contact
           </Link>
@@ -96,7 +114,9 @@ export default function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="border-b border-white/20 pb-4"
+                  className={`border-b border-white/20 pb-4 ${
+                    isActive(item.href) ? "text-brand" : ""
+                  }`}
                 >
                   {item.label}
                 </Link>

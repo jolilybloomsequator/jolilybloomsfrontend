@@ -11,7 +11,7 @@ export default function AdminFlowersPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Admin Portal</p>
             <h1 className="mt-2 text-4xl font-bold text-charcoal">Flower Management</h1>
             <p className="mt-2 text-sm text-muted">
-              Add or update flowers in your catalogue with image uploads and availability details.
+              Add or update flowers in your catalogue with image uploads and a few core details.
             </p>
           </div>
           <AdminLogoutButton />

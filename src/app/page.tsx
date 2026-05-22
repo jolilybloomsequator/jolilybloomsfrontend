@@ -42,6 +42,8 @@ const logisticsPoints = [
 ];
 
 export default function Home() {
+  const featuredFlowers = flowerCatalogue.slice(0, 4);
+
   return (
     <div>
       <Hero />
@@ -71,7 +73,7 @@ export default function Home() {
               </span>
               <h2 className="text-3xl font-semibold text-charcoal">Explore our export-ready varieties</h2>
               <p className="text-sm text-muted">
-                Over 26 varieties with seasonal availability, stem length options, and curated mixes.
+                Fresh uploads from the admin panel will appear here with their key export details.
               </p>
             </div>
             <Link
@@ -82,28 +84,38 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {flowerCatalogue.slice(0, 4).map((flower) => (
-              <FadeIn
-                key={flower.id}
-                className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-soft"
-              >
-                <Image
-                  src="/images/flower-placeholder.svg"
-                  alt={`${flower.name} variety`}
-                  width={320}
-                  height={240}
-                  className="h-40 w-full object-cover"
-                />
-                <div className="space-y-2 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-                    {flower.availability}
-                  </p>
-                  <h3 className="text-lg font-semibold text-charcoal">{flower.name}</h3>
-                  <p className="text-sm text-muted">{flower.botanicalName}</p>
-                  <p className="text-xs text-muted">Stem lengths: {flower.stemLength}</p>
-                </div>
-              </FadeIn>
-            ))}
+            {featuredFlowers.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-border-soft bg-white p-6 text-sm text-muted md:col-span-4">
+                No flowers have been uploaded yet.
+              </div>
+            ) : (
+              featuredFlowers.map((flower) => (
+                <FadeIn
+                  key={flower.id}
+                  className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-soft"
+                >
+                  <Image
+                    src="/images/flower-placeholder.svg"
+                    alt={`${flower.name} variety`}
+                    width={320}
+                    height={240}
+                    className="h-40 w-full object-cover"
+                  />
+                  <div className="space-y-2 p-4">
+                    {flower.availability ? (
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                        {flower.availability}
+                      </p>
+                    ) : null}
+                    <h3 className="text-lg font-semibold text-charcoal">{flower.name}</h3>
+                    {flower.botanicalName ? <p className="text-sm text-muted">{flower.botanicalName}</p> : null}
+                    {flower.stemLength ? (
+                      <p className="text-xs text-muted">Stem lengths: {flower.stemLength}</p>
+                    ) : null}
+                  </div>
+                </FadeIn>
+              ))
+            )}
           </div>
         </div>
       </section>

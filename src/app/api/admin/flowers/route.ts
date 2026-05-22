@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { flowerCatalogue, FlowerItem } from "@/data/flowers";
+import type { FlowerItem } from "@/data/flowers";
 import {
   FLOWER_CATALOGUE_OBJECT_PATH,
   createSupabaseAdminClient,
@@ -58,7 +58,8 @@ export async function GET(request: NextRequest) {
       const { flowers } = await loadCatalogue();
       return NextResponse.json(flowers);
     } catch {
-      return NextResponse.json(flowerCatalogue);
+      // Admin UI should show an empty list if the stored catalogue cannot be loaded.
+      return NextResponse.json([]);
     }
   } catch {
     return NextResponse.json({ error: "Failed to fetch flowers" }, { status: 500 });

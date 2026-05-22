@@ -9,10 +9,8 @@ export default function FlowerUploadForm() {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
-    botanicalName: "",
-    stemLength: "",
-    category: "Feature Flower",
     color: "",
+    stemLength: "",
     availability: "Year-Round" as const,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -70,10 +68,8 @@ export default function FlowerUploadForm() {
       setFormData({
         id: "",
         name: "",
-        botanicalName: "",
-        stemLength: "",
-        category: "Feature Flower",
         color: "",
+        stemLength: "",
         availability: "Year-Round",
       });
       setImageFile(null);
@@ -128,15 +124,15 @@ export default function FlowerUploadForm() {
         </div>
 
         <div>
-          <label htmlFor="botanicalName" className="mb-1 block text-sm font-medium text-charcoal">
-            Botanical Name
+          <label htmlFor="color" className="mb-1 block text-sm font-medium text-charcoal">
+            Colour
           </label>
           <input
-            id="botanicalName"
+            id="color"
             type="text"
-            name="botanicalName"
-            placeholder="Botanical name"
-            value={formData.botanicalName}
+            name="color"
+            placeholder="Color"
+            value={formData.color}
             onChange={handleInputChange}
             required
             className="w-full rounded-lg border border-border-soft px-3 py-2"
@@ -154,47 +150,13 @@ export default function FlowerUploadForm() {
             placeholder="e.g., 40-70 cm"
             value={formData.stemLength}
             onChange={handleInputChange}
-            required
-            className="w-full rounded-lg border border-border-soft px-3 py-2"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="category" className="mb-1 block text-sm font-medium text-charcoal">
-            Category
-          </label>
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleInputChange}
-            className="w-full rounded-lg border border-border-soft px-3 py-2"
-          >
-            <option value="Feature Flower">Feature Flower</option>
-            <option value="Filler">Filler</option>
-            <option value="Foliage">Foliage</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="color" className="mb-1 block text-sm font-medium text-charcoal">
-            Color
-          </label>
-          <input
-            id="color"
-            type="text"
-            name="color"
-            placeholder="Color"
-            value={formData.color}
-            onChange={handleInputChange}
-            required
             className="w-full rounded-lg border border-border-soft px-3 py-2"
           />
         </div>
 
         <div>
           <label htmlFor="availability" className="mb-1 block text-sm font-medium text-charcoal">
-            Availability
+            Seasonal?
           </label>
           <select
             id="availability"

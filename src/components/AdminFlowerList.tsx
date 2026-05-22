@@ -135,13 +135,15 @@ export default function AdminFlowerList() {
               <div className="space-y-2 p-4">
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="text-lg font-semibold text-charcoal">{flower.name}</h3>
-                  <span className="rounded-full bg-rose px-3 py-1 text-xs font-semibold text-brand">
-                    {flower.availability}
-                  </span>
+                  {flower.availability ? (
+                    <span className="rounded-full bg-rose px-3 py-1 text-xs font-semibold text-brand">
+                      {flower.availability}
+                    </span>
+                  ) : null}
                 </div>
-                <p className="text-sm text-muted">{flower.botanicalName}</p>
                 <p className="text-xs text-muted">
-                  Category: {flower.category} • Colour: {flower.color} • Stem: {flower.stemLength}
+                  {flower.color ? `Colour: ${flower.color}` : "Colour: —"}
+                  {flower.stemLength ? ` • Stem: ${flower.stemLength}` : ""}
                 </p>
                 <p className="text-xs font-mono text-muted">ID: {flower.id}</p>
                 <button

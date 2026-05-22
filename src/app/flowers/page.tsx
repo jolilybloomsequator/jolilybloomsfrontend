@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
-import { flowerCatalogue, type FlowerItem } from "../../data/flowers";
+import type { FlowerItem } from "../../data/flowers";
 
 const availabilityOptions = ["All", "Year-Round", "Seasonal"];
 
@@ -12,7 +12,9 @@ function mergeFlowerCatalogues(base: FlowerItem[], incoming: FlowerItem[]) {
   const map = new Map<string, FlowerItem>();
 
   for (const flower of base) {
-    map.set(flower.id, flower);
+    if (flower?.id) {
+      map.set(flower.id, flower);
+    }
   }
 
   for (const flower of incoming) {
@@ -25,7 +27,8 @@ function mergeFlowerCatalogues(base: FlowerItem[], incoming: FlowerItem[]) {
 }
 
 export default function FlowersPage() {
-  const [flowers, setFlowers] = useState<FlowerItem[]>(flowerCatalogue);
+  const [flowers, setFlowers] = useState<FlowerItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedColor, setSelectedColor] = useState("All");
   const [selectedAvailability, setSelectedAvailability] = useState("All");
@@ -42,10 +45,16 @@ export default function FlowersPage() {
 
         const data = (await response.json()) as FlowerItem[];
         if (!cancelled && Array.isArray(data)) {
-          setFlowers(mergeFlowerCatalogues(flowerCatalogue, data));
+          setFlowers(mergeFlowerCatalogues([], data));
         }
       } catch {
-        // Keep local fallback data.
+        if (!cancelled) {
+          setFlowers([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
 
@@ -57,11 +66,25 @@ export default function FlowersPage() {
   }, []);
 
   const categories = useMemo(
-    () => ["All", ...new Set(flowers.map((flower) => flower.category))],
+    () => [
+      "All",
+      ...new Set(
+        flowers
+          .map((flower) => flower.category)
+          .filter((value): value is string => !!value?.trim()),
+      ),
+    ],
     [flowers],
   );
   const colors = useMemo(
-    () => ["All", ...new Set(flowers.map((flower) => flower.color))],
+    () => [
+      "All",
+      ...new Set(
+        flowers
+          .map((flower) => flower.color)
+          .filter((value): value is string => !!value?.trim()),
+      ),
+    ],
     [flowers],
   );
 
@@ -154,38 +177,52 @@ export default function FlowersPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredFlowers.map((flower) => (
-              <FadeIn
-                key={flower.id}
-                className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-soft"
-              >
-                <Image
-                  src={flower.image && flower.image.trim().length > 0 ? flower.image : "/images/flower-placeholder.svg"}
-                  alt={`${flower.name} variety`}
-                  width={400}
-                  height={280}
-                  className="h-44 w-full object-cover"
-                />
-                <div className="space-y-3 p-5">
-                  <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-rose px-3 py-1 text-xs font-semibold text-brand">
-                      {flower.availability}
-                    </span>
-                    <span className="text-xs font-semibold text-muted">{flower.category}</span>
+          {!loading && filteredFlowers.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-border-soft bg-cream p-6 text-sm text-muted">
+              No flowers available yet.
+            </div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {filteredFlowers.map((flower) => (
+                <FadeIn
+                  key={flower.id}
+                  className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-soft"
+                >
+                  <Image
+                    src={
+                      flower.image && flower.image.trim().length > 0
+                        ? flower.image
+                        : "/images/flower-placeholder.svg"
+                    }
+                    alt={`${flower.name} variety`}
+                    width={400}
+                    height={280}
+                    className="h-44 w-full object-cover"
+                  />
+                  <div className="space-y-3 p-5">
+                    <div className="flex items-center justify-between">
+                      {flower.availability ? (
+                        <span className="rounded-full bg-rose px-3 py-1 text-xs font-semibold text-brand">
+                          {flower.availability}
+                        </span>
+                      ) : null}
+                      {flower.category ? (
+                        <span className="text-xs font-semibold text-muted">{flower.category}</span>
+                      ) : null}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-charcoal">{flower.name}</h3>
+                      {flower.botanicalName ? <p className="text-sm text-muted">{flower.botanicalName}</p> : null}
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-muted">
+                      <span>Stem length: {flower.stemLength || "—"}</span>
+                      <span>Colour: {flower.color || "—"}</span>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-charcoal">{flower.name}</h3>
-                    <p className="text-sm text-muted">{flower.botanicalName}</p>
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-muted">
-                    <span>Stem length: {flower.stemLength}</span>
-                    <span>Colour: {flower.color}</span>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+                </FadeIn>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

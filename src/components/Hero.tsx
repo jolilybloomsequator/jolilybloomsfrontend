@@ -6,13 +6,23 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="bg-cream">
+    <section className="relative overflow-hidden bg-cream">
+      <Image
+        src="https://github.com/user-attachments/assets/519a9742-c1aa-4816-bbbd-7c5c69a786a4"
+        alt=""
+        fill
+        aria-hidden
+        className="object-cover object-center opacity-35"
+        sizes="100vw"
+        priority
+      />
+      <div className="absolute inset-0 bg-white/70" />
       <div className="mx-auto flex w-full max-w-6xl gap-10 px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="flex flex-col gap-6"
+          className="relative flex flex-col gap-6"
         >
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brand">
             Kenya&apos;s export-grade blooms

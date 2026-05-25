@@ -1,5 +1,5 @@
-import Image from "next/image";
 import FadeIn from "../../components/FadeIn";
+import AboutGallery from "../../components/AboutGallery";
 import PageHeader from "../../components/PageHeader";
 
 const values = [
@@ -40,14 +40,8 @@ export default function AboutPage() {
               coordination. This ensures every shipment meets buyer specifications and arrives fresh.
             </p>
           </FadeIn>
-          <FadeIn className="rounded-3xl border border-border-soft bg-cream p-6 shadow-soft">
-            <Image
-              src="/images/hero-flowers.svg"
-              alt="Kenyan flower export team"
-              width={640}
-              height={480}
-              className="h-full w-full rounded-2xl object-cover"
-            />
+          <FadeIn>
+            <AboutGallery />
           </FadeIn>
         </div>
       </section>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FadeIn from "../components/FadeIn";
 import Hero from "../components/Hero";
-import { flowerCatalogue } from "../data/flowers";
+import { loadFlowerCatalogue } from "../lib/flowerCatalogue";
 
 const highlights = [
   {
@@ -41,8 +41,8 @@ const logisticsPoints = [
   },
 ];
 
-export default function Home() {
-  const featuredFlowers = flowerCatalogue.slice(0, 4);
+export default async function Home() {
+  const featuredFlowers = (await loadFlowerCatalogue()).slice(0, 4);
 
   return (
     <div>

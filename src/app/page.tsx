@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FadeIn from "../components/FadeIn";
 import Hero from "../components/Hero";
-import { flowerCatalogue } from "../data/flowers";
+import { loadFlowerCatalogue } from "../lib/flowerCatalogue";
 
 const highlights = [
   {
@@ -41,8 +41,8 @@ const logisticsPoints = [
   },
 ];
 
-export default function Home() {
-  const featuredFlowers = flowerCatalogue.slice(0, 4);
+export default async function Home() {
+  const featuredFlowers = (await loadFlowerCatalogue()).slice(0, 4);
 
   return (
     <div>
@@ -95,7 +95,11 @@ export default function Home() {
                   className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-soft"
                 >
                   <Image
-                    src="/images/flower-placeholder.svg"
+                    src={
+                      flower.image && flower.image.trim().length > 0
+                        ? flower.image
+                        : "/images/flower-placeholder.svg"
+                    }
                     alt={`${flower.name} variety`}
                     width={320}
                     height={240}

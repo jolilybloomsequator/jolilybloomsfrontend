@@ -6,22 +6,20 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const galleryPhotos = [
   {
-    src: "https://github.com/user-attachments/assets/45e8e92c-cc7e-4a23-b0c6-9549889e9574",
+    src: "https://github.com/user-attachments/assets/97cb2598-b0b4-4ecf-9171-56ad7b8924da",
     alt: "Jolily Blooms about page photo one",
   },
   {
-    src: "https://github.com/user-attachments/assets/97cb2598-b0b4-4ecf-9171-56ad7b8924da",
+    src: "https://github.com/user-attachments/assets/dfcb0fa3-646a-46c7-836b-6566834be3c5",
     alt: "Jolily Blooms about page photo two",
   },
   {
-    src: "https://github.com/user-attachments/assets/dfcb0fa3-646a-46c7-836b-6566834be3c5",
+    src: "https://github.com/user-attachments/assets/4e846db5-d8a3-4dcf-a956-5ea61f11dee1",
     alt: "Jolily Blooms about page photo three",
   },
-  {
-    src: "https://github.com/user-attachments/assets/4e846db5-d8a3-4dcf-a956-5ea61f11dee1",
-    alt: "Jolily Blooms about page photo four",
-  },
 ] as const;
+
+const featuredBackground = "/images/hero-flowers.svg";
 
 export default function AboutGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -39,6 +37,15 @@ export default function AboutGallery() {
   return (
     <div className="rounded-3xl border border-border-soft bg-gradient-to-br from-rose/60 via-white to-brand/10 p-4 shadow-soft">
       <div className="relative overflow-hidden rounded-2xl bg-brand/10">
+        <Image
+          src={featuredBackground}
+          alt=""
+          fill
+          aria-hidden
+          className="object-cover opacity-50"
+          sizes="(max-width: 1024px) 100vw, 640px"
+        />
+        <div className="absolute inset-0 bg-white/30" />
         <div className="absolute left-4 top-4 z-10 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
           Our photos
         </div>
@@ -48,7 +55,7 @@ export default function AboutGallery() {
             alt={activePhoto.alt}
             fill
             priority
-            className="object-cover"
+            className="object-cover opacity-95 mix-blend-multiply"
             sizes="(max-width: 1024px) 100vw, 640px"
           />
         </div>
@@ -70,7 +77,7 @@ export default function AboutGallery() {
         </button>
       </div>
 
-      <div className="mt-4 grid grid-cols-4 gap-3">
+      <div className="mt-4 grid grid-cols-3 gap-3">
         {galleryPhotos.map((photo, index) => (
           <button
             key={photo.src}

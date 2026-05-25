@@ -24,7 +24,7 @@ export default function AboutGallery() {
         Our photos
       </div>
       <div className="grid gap-3 md:grid-cols-3">
-        {galleryPhotos.map((photo, index) => (
+        {galleryPhotos.map((photo) => (
           <div key={photo.src} className="overflow-hidden rounded-xl border border-border-soft bg-white shadow-soft">
             <div className="relative aspect-square">
               <Image src={photo.src} alt={photo.alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 220px" />

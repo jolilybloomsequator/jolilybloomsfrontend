@@ -31,63 +31,65 @@ export default function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border-soft bg-cream/90 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3 text-charcoal">
-          <Image
-            src="/images/jolily-blooms.svg"
-            alt="Jolily Blooms logo"
-            width={56}
-            height={56}
-            className="h-11 w-11 shrink-0"
-            priority
-          />
-          <span className="text-lg font-semibold tracking-tight">
-            Jolily Blooms
-            <span className="block text-xs font-medium uppercase tracking-[0.24em] text-muted">
-              Equator Limited
+    <>
+      <header className="sticky top-0 z-50 border-b border-border-soft bg-cream/90 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+          <Link href="/" className="flex items-center gap-3 text-charcoal">
+            <Image
+              src="/images/jolily-blooms.svg"
+              alt="Jolily Blooms logo"
+              width={56}
+              height={56}
+              className="h-11 w-11 shrink-0"
+              priority
+            />
+            <span className="text-lg font-semibold tracking-tight">
+              Jolily Blooms
+              <span className="block text-xs font-medium uppercase tracking-[0.24em] text-muted">
+                Equator Limited
+              </span>
             </span>
-          </span>
-        </Link>
-        <nav className="hidden items-center gap-6 text-sm font-medium text-charcoal lg:flex">
-          {navigation.slice(0, -1).map((item) => (
+          </Link>
+          <nav className="hidden items-center gap-6 text-sm font-medium text-charcoal lg:flex">
+            {navigation.slice(0, -1).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`transition ${
+                  isActive(item.href)
+                    ? "rounded-full bg-brand px-3 py-1 text-white"
+                    : "hover:text-brand"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
             <Link
-              key={item.href}
-              href={item.href}
-              className={`transition ${
-                isActive(item.href)
-                  ? "rounded-full bg-brand px-3 py-1 text-white"
-                  : "hover:text-brand"
+              href="/contact"
+              className={`rounded-full px-5 py-2 text-sm font-semibold transition shadow-soft ${
+                isActive("/contact")
+                  ? "bg-brand-dark text-white"
+                  : "bg-brand text-white hover:bg-brand-dark"
               }`}
             >
-              {item.label}
+              Contact
             </Link>
-          ))}
-          <Link
-            href="/contact"
-            className={`rounded-full px-5 py-2 text-sm font-semibold transition shadow-soft ${
-              isActive("/contact")
-                ? "bg-brand-dark text-white"
-                : "bg-brand text-white hover:bg-brand-dark"
-            }`}
+          </nav>
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-full border border-border-soft bg-white/70 p-2 text-charcoal transition hover:border-brand lg:hidden"
+            onClick={() => setIsOpen(true)}
+            aria-expanded={isOpen}
+            aria-label="Open menu"
           >
-            Contact
-          </Link>
-        </nav>
-        <button
-          type="button"
-          className="inline-flex items-center justify-center rounded-full border border-border-soft bg-white/70 p-2 text-charcoal transition hover:border-brand lg:hidden"
-          onClick={() => setIsOpen(true)}
-          aria-expanded={isOpen}
-          aria-label="Open menu"
-        >
-          <Menu className="h-5 w-5" />
-        </button>
-      </div>
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
+      </header>
       <AnimatePresence>
         {isOpen ? (
-            <motion.div
-              className="fixed inset-0 z-50 flex h-full w-full flex-col bg-charcoal backdrop-blur"
+          <motion.div
+            className="fixed inset-0 z-[60] flex h-dvh w-dvw flex-col bg-charcoal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -125,6 +127,6 @@ export default function SiteHeader() {
           </motion.div>
         ) : null}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

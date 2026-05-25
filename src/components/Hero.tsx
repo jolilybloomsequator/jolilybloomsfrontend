@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-cream">
       <Image
-        src="https://github.com/user-attachments/assets/519a9742-c1aa-4816-bbbd-7c5c69a786a4"
+        src="https://github.com/user-attachments/assets/4d68572d-ba65-4457-a372-dea04a2e9292"
         alt=""
         fill
         aria-hidden

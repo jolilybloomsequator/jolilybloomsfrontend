@@ -6,16 +6,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const galleryPhotos = [
   {
-    src: "https://github.com/user-attachments/assets/97cb2598-b0b4-4ecf-9171-56ad7b8924da",
+    src: "https://github.com/user-attachments/assets/dfcb0fa3-646a-46c7-836b-6566834be3c5",
     alt: "Jolily Blooms about page photo one",
   },
   {
-    src: "https://github.com/user-attachments/assets/dfcb0fa3-646a-46c7-836b-6566834be3c5",
-    alt: "Jolily Blooms about page photo two",
-  },
-  {
     src: "https://github.com/user-attachments/assets/4e846db5-d8a3-4dcf-a956-5ea61f11dee1",
-    alt: "Jolily Blooms about page photo three",
+    alt: "Jolily Blooms about page photo two",
   },
 ] as const;
 
@@ -77,7 +73,7 @@ export default function AboutGallery() {
         </button>
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      <div className="mt-4 grid grid-cols-2 gap-3">
         {galleryPhotos.map((photo, index) => (
           <button
             key={photo.src}

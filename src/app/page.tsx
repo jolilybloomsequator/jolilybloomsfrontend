@@ -95,7 +95,11 @@ export default async function Home() {
                   className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-soft"
                 >
                   <Image
-                    src="/images/flower-placeholder.svg"
+                    src={
+                      flower.image && flower.image.trim().length > 0
+                        ? flower.image
+                        : "/images/flower-placeholder.svg"
+                    }
                     alt={`${flower.name} variety`}
                     width={320}
                     height={240}

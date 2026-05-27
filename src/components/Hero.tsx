@@ -12,12 +12,11 @@ export default function Hero() {
         alt=""
         fill
         aria-hidden
-        className="object-cover object-center opacity-60"
+        className="object-cover object-center"
         sizes="100vw"
         quality={100}
         priority
       />
-      <div className="absolute inset-0 bg-white/45" />
       <div className="mx-auto flex w-full max-w-6xl gap-10 px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -36,7 +36,7 @@ export default function Hero() {
 
   return (
     <section className="bg-cream">
-      <div className="mx-auto w-full max-w-6xl px-6 py-10 md:py-14">
+      <div className="mx-auto w-full max-w-6xl  md:py-14">
         <div className="relative overflow-hidden rounded-[2rem] shadow-soft">
           <Image
             src={activeImage.src}
@@ -61,7 +61,7 @@ export default function Hero() {
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <div className="flex items-center gap-2 rounded-full bg-black/30 px-3 py-2 backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-full bg-black/30 backdrop-blur-sm">
               {heroImages.map((image, index) => (
                 <button
                   key={image.src}
@@ -92,23 +92,14 @@ export default function Hero() {
           transition={{ duration: 0.7 }}
           className="mx-auto mt-8 flex max-w-3xl flex-col items-start gap-5"
         >
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brand">
-            Jolily Blooms Equator Limited
-          </span>
+        
           <h1 className="text-4xl font-semibold text-charcoal md:text-5xl">
-            Reliable flower sourcing for global wholesale buyers.
+            YOUR TRUSTED SOURCE FOR PREMIUM KENYAN FLOWERS
           </h1>
           <p className="text-lg text-muted">
-            We consolidate premium Kenyan flowers and deliver consistent weekly supply to Europe, the
-            Middle East, and beyond.
+          At Jolily Blooms Equator Limited, we believe flowers help people share their feelings in a special way. We are proud to export quality Kenyan flowers to the United Kingdom, the Middle East, China, South Africa, and many other countries. Our clients trust us because we provide good quality flowers and reliable service.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link
-              href="/flowers"
-              className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-dark"
-            >
-              View Catalogue
-            </Link>
             <Link
               href="/contact"
               className="rounded-full border border-brand px-6 py-3 text-sm font-semibold text-brand transition hover:border-brand-dark hover:text-brand-dark"

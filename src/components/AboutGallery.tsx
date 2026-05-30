@@ -81,9 +81,9 @@ export default function AboutGallery() {
               activeIndex === index ? "border-brand ring-2 ring-brand/20" : "border-transparent opacity-70"
             }`}
           > */}
-            <div className="relative aspect-square">
+            {/* <div className="relative aspect-square">
               <Image src={photo.src} alt={photo.alt} fill className="object-cover" sizes="160px" />
-            </div>
+            </div> */}
           </button>
         ))}
       </div>

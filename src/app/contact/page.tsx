@@ -10,7 +10,7 @@ export default function ContactPage() {
       <PageHeader
         eyebrow="Contact Us"
         title="Start your weekly flower order"
-        description="Send us your requirements and our export team will respond within 24 hours with availability, pricing, and logistics details."
+        description="Send us your requirements and our team will respond within 24 hours with availability and pricing."
       />
 
       <section className="bg-white">

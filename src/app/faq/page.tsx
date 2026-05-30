@@ -9,8 +9,7 @@ const faqs = [
   },
   {
     question: "How soon can you ship after confirming an order?",
-    answer:
-      "Typical lead time is 48-72 hours depending on variety availability and freight schedules.",
+    answer: "Typical lead time is 48-72 hours depending on variety availability.",
   },
   {
     question: "Do you provide quality inspection reports?",

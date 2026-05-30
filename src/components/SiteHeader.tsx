@@ -13,7 +13,6 @@ const navigation = [
   { label: "About", href: "/about" },
   { label: "Flowers", href: "/flowers" },
   { label: "Quality", href: "/quality" },
-  { label: "Logistics", href: "/logistics" },
   { label: "FAQ", href: "/faq" },
   { label: "Privacy", href: "/privacy" },
   { label: "Contact", href: "/contact" },

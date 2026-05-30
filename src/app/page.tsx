@@ -1,4 +1,4 @@
-import { Globe, Leaf, Package, ShieldCheck, Thermometer, Truck } from "lucide-react";
+import { Leaf, ShieldCheck, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import FadeIn from "../components/FadeIn";
@@ -18,26 +18,8 @@ const highlights = [
   },
   {
     title: "Export Expertise",
-    description: "JKIA-based logistics team coordinates documentation, freight slots, and dispatch updates.",
-    icon: Truck,
-  },
-];
-
-const logisticsPoints = [
-  {
-    title: "48-hour dispatch",
-    detail: "Cut-to-cargo timelines with daily uplift schedules out of JKIA.",
-    icon: Package,
-  },
-  {
-    title: "Cold chain assurance",
-    detail: "Temperature-controlled pre-cooling and data loggers on request.",
-    icon: Thermometer,
-  },
-  {
-    title: "Global reach",
-    detail: "Regular freight partners for Europe and the Middle East with tracked shipments.",
-    icon: Globe,
+    description: "Carefully prepared flower orders with consistent grading and presentation.",
+    icon: Sparkles,
   },
 ];
 
@@ -174,30 +156,6 @@ export default async function Home() {
               </Link>
             </div>
           </FadeIn>
-        </div>
-      </section>
-
-      <section className="bg-rose">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-16">
-          <div className="max-w-xl space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brand">
-              Export & Logistics
-            </span>
-            <h2 className="text-3xl font-semibold text-charcoal">End-to-end export coordination</h2>
-            <p className="text-sm text-muted">
-              We handle documentation, cold-chain monitoring, and freight bookings so buyers receive clear
-              schedules and reliable delivery windows.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {logisticsPoints.map((point) => (
-              <FadeIn key={point.title} className="rounded-2xl border border-border-soft bg-white p-6">
-                <point.icon className="h-6 w-6 text-brand" />
-                <h3 className="mt-4 text-lg font-semibold text-charcoal">{point.title}</h3>
-                <p className="mt-2 text-sm text-muted">{point.detail}</p>
-              </FadeIn>
-            ))}
-          </div>
         </div>
       </section>
 

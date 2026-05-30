@@ -13,7 +13,7 @@ const values = [
   },
   {
     title: "Care",
-    description: "Cold-chain stewardship from farm to freight with QC reports on request.",
+    description: "Careful handling from farm to final QC reports on request.",
   },
 ];
 
@@ -31,13 +31,13 @@ export default function AboutPage() {
           <FadeIn className="space-y-4">
             <h2 className="text-3xl font-semibold text-charcoal">Our story</h2>
             <p className="text-sm text-muted">
-              Jolily Blooms Equator Limited was built to bridge Kenyan growers with global wholesale markets. We curate dependable supply lines, manage export logistics and keep buyers informed at every stage.
-Our team brings hands on experience in quality control, freight coordination and ensuring that premium Kenyan flowers are consistently delivered to our clients. This ensures every shipment meets buyer specifications and arrives fresh. Located on Joseph Kangethe Road in Nairobi, Kenya, we believe flowers are more than just beautiful. They represent trust, care and the quality that Kenya is known for. 
+              Jolily Blooms Equator Limited was built to bridge Kenyan growers with global wholesale markets. We curate dependable supply lines and keep buyers informed at every stage.
+Our team brings hands-on experience in quality control and ensuring that premium Kenyan flowers are consistently prepared for our clients. This ensures every order meets buyer specifications and arrives fresh. Located on Joseph Kangethe Road in Nairobi, Kenya, we believe flowers are more than just beautiful. They represent trust, care and the quality that Kenya is known for. 
 Our success comes from delivering fresh flowers with a long vase life and keeping our customers happy. We make it easy for you to buy flowers from different Kenyan growers. Our team carefully selects and checks every flower before delivery. We bring the best Kenyan flowers straight to your depot, saving you time and making the buying process simple and stress-free. We are here to help you get quality flowers you can trust.
             </p>
             <p className="text-sm text-muted">
-              Our team brings hands-on experience in flower sourcing, quality control and freight
-              coordination. This ensures every shipment meets buyer specifications and arrives fresh.
+              Our team brings hands-on experience in flower sourcing and quality control. This ensures every
+              order meets buyer specifications and arrives fresh.
             </p>
           </FadeIn>
           <FadeIn>
@@ -63,8 +63,8 @@ Our success comes from delivering fresh flowers with a long vase life and keepin
             <h2 className="text-3xl font-semibold text-charcoal">Sourcing model</h2>
             <p className="text-sm text-muted">
               We consolidate from a trusted network of Kenyan farms, verifying variety quality, stem
-              lengths, and post-harvest handling. Buyers receive a weekly availability sheet, consolidated
-              billing, and a single logistics point of contact.
+              lengths, and post-harvest handling. Buyers receive a weekly availability sheet and consolidated
+              billing.
             </p>
           </FadeIn>
           <FadeIn className="grid gap-6 rounded-3xl border border-border-soft bg-cream p-8 md:grid-cols-3">
@@ -84,10 +84,8 @@ Our success comes from delivering fresh flowers with a long vase life and keepin
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Step 3</p>
-              <h3 className="mt-2 text-lg font-semibold text-charcoal">Export dispatch</h3>
-              <p className="mt-2 text-sm text-muted">
-                Documentation, freight booking, and tracking shared end-to-end.
-              </p>
+              <h3 className="mt-2 text-lg font-semibold text-charcoal">Prepared for delivery</h3>
+              <p className="mt-2 text-sm text-muted">Orders are packed, labeled, and ready for buyer handoff.</p>
             </div>
           </FadeIn>
         </div>

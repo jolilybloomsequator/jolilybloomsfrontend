@@ -1,13 +1,13 @@
 # Jolily Blooms Equator Limited
 
-Jolily Blooms Equator Limited is a Next.js web app for export-grade Kenyan flowers. The site presents the flower catalogue, export and logistics details, quality standards, FAQs, and a contact flow for weekly orders.
+Jolily Blooms Equator Limited is a Next.js web app for export-grade Kenyan flowers. The site presents the flower catalogue, quality standards, FAQs, and a contact flow for weekly orders.
 
 ## Features
 
-- Export-focused homepage with highlights, catalogue previews, quality information, and logistics details.
+- Export-focused homepage with highlights, catalogue previews, and quality information.
 - Filterable flower catalogue by category, colour, and availability.
 - Contact form with hCaptcha protection and API-backed submission handling.
-- Dedicated pages for About, Logistics, Quality, FAQ, Privacy, and Contact.
+- Dedicated pages for About, Quality, FAQ, Privacy, and Contact.
 - Persistent site header, footer, and WhatsApp shortcut.
 
 ## Tech Stack
@@ -86,7 +86,6 @@ src/
 		contact/
 		faq/
 		flowers/
-		logistics/
 		privacy/
 		quality/
 	components/
@@ -100,7 +99,6 @@ public/
 - `/about` - company overview
 - `/flowers` - filterable catalogue
 - `/quality` - grading and packaging standards
-- `/logistics` - export and shipping process
 - `/faq` - common questions
 - `/contact` - inquiry form and contact details
 - `/privacy` - privacy policy

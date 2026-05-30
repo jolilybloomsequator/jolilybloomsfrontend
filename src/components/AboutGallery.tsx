@@ -19,7 +19,7 @@ const galleryPhotos = [
   },
 ] as const;
 
-const featuredBackground = "/images/hero-flowers.svg";
+
 
 export default function AboutGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -37,14 +37,7 @@ export default function AboutGallery() {
   return (
     <div className="rounded-3xl border border-border-soft bg-gradient-to-br from-rose/60 via-white to-brand/10 p-4 shadow-soft">
       <div className="relative overflow-hidden rounded-2xl bg-brand/10">
-        <Image
-          src={featuredBackground}
-          alt=""
-          fill
-          aria-hidden
-          className="object-cover opacity-50"
-          sizes="(max-width: 1024px) 100vw, 640px"
-        />
+      
         <div className="absolute inset-0 bg-white/30" />
         <div className="absolute left-4 top-4 z-10 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
           Our photos
@@ -77,7 +70,7 @@ export default function AboutGallery() {
         </button>
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      {/* <div className="mt-4 grid grid-cols-3 gap-3">
         {galleryPhotos.map((photo, index) => (
           <button
             key={photo.src}
@@ -87,7 +80,7 @@ export default function AboutGallery() {
             className={`overflow-hidden rounded-xl border transition ${
               activeIndex === index ? "border-brand ring-2 ring-brand/20" : "border-transparent opacity-70"
             }`}
-          >
+          > */}
             <div className="relative aspect-square">
               <Image src={photo.src} alt={photo.alt} fill className="object-cover" sizes="160px" />
             </div>

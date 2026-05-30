@@ -31,12 +31,12 @@ export default function AboutPage() {
           <FadeIn className="space-y-4">
             <h2 className="text-3xl font-semibold text-charcoal">Our story</h2>
             <p className="text-sm text-muted">
-              Based in Nairobi, Jolily Blooms Equator Limited was built to bridge Kenyan growers with global
-              wholesale markets. We curate dependable supply lines, manage export logistics, and keep buyers
-              informed at every stage.
+              Jolily Blooms Equator Limited was built to bridge Kenyan growers with global wholesale markets. We curate dependable supply lines, manage export logistics and keep buyers informed at every stage.
+Our team brings hands on experience in quality control, freight coordination and ensuring that premium Kenyan flowers are consistently delivered to our clients. This ensures every shipment meets buyer specifications and arrives fresh. Located on Joseph Kangethe Road in Nairobi, Kenya, we believe flowers are more than just beautiful. They represent trust, care and the quality that Kenya is known for. 
+Our success comes from delivering fresh flowers with a long vase life and keeping our customers happy. We make it easy for you to buy flowers from different Kenyan growers. Our team carefully selects and checks every flower before delivery. We bring the best Kenyan flowers straight to your depot, saving you time and making the buying process simple and stress-free. We are here to help you get quality flowers you can trust.
             </p>
             <p className="text-sm text-muted">
-              Our team brings hands-on experience in flower sourcing, quality control, and freight
+              Our team brings hands-on experience in flower sourcing, quality control and freight
               coordination. This ensures every shipment meets buyer specifications and arrives fresh.
             </p>
           </FadeIn>

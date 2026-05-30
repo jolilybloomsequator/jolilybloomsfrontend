@@ -93,7 +93,7 @@ export default function Hero() {
           className="mx-auto mt-8 flex max-w-3xl flex-col items-start gap-5"
         >
         
-          <h1 className="text-4xl font-semibold text-charcoal md:text-5xl">
+          <h1 className="text-3xl font-semibold text-charcoal md:text-4xl">
             YOUR TRUSTED SOURCE FOR PREMIUM KENYAN FLOWERS
           </h1>
           <p className="text-lg text-muted">

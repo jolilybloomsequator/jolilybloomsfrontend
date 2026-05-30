@@ -36,7 +36,7 @@ export default function Hero() {
 
   return (
     <section className="bg-cream">
-      <div className="mx-auto w-full max-w-6xl ">
+      <div className="mx-auto w-full max-w-6xl md:py-14">
         <div className="relative overflow-hidden rounded-[2rem] shadow-soft">
           <Image
             src={activeImage.src}

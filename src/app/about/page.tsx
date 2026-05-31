@@ -56,40 +56,6 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
-
-      <section className="bg-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-16">
-          <FadeIn className="space-y-4">
-            <h2 className="text-3xl font-semibold text-charcoal">Sourcing model</h2>
-            <p className="text-sm text-muted">
-              We consolidate from a trusted network of Kenyan farms, verifying variety quality, stem
-              lengths, and post-harvest handling. Buyers receive a weekly availability sheet and consolidated
-              billing.
-            </p>
-          </FadeIn>
-          <FadeIn className="grid gap-6 rounded-3xl border border-border-soft bg-cream p-8 md:grid-cols-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Step 1</p>
-              <h3 className="mt-2 text-lg font-semibold text-charcoal">Confirm availability</h3>
-              <p className="mt-2 text-sm text-muted">
-                Receive weekly inventory, pricing, and lead time updates per variety.
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Step 2</p>
-              <h3 className="mt-2 text-lg font-semibold text-charcoal">Consolidate & quality check</h3>
-              <p className="mt-2 text-sm text-muted">
-                Orders are graded, hydrated, and packed with export QA sign-off.
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Step 3</p>
-              <h3 className="mt-2 text-lg font-semibold text-charcoal">Prepared for delivery</h3>
-              <p className="mt-2 text-sm text-muted">Orders are packed, labeled, and ready for buyer handoff.</p>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
     </div>
   );
 }

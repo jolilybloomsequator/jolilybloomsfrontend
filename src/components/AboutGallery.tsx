@@ -20,18 +20,18 @@ export default function AboutGallery() {
 
   return (
     <div className="rounded-3xl border border-border-soft bg-gradient-to-br from-rose/60 via-white to-brand/10 p-4 shadow-soft">
-      <div className="relative overflow-hidden rounded-2xl bg-brand/10">
+      <div className="relative min-h-[24rem] overflow-hidden rounded-2xl bg-brand/10 md:min-h-[32rem]">
         <div className="absolute inset-0 bg-white/30" />
         <div className="absolute left-4 top-4 z-10 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
           Our photos
         </div>
-        <div className="relative aspect-[4/3]">
+        <div className="relative h-full">
           <Image
             src={activePhoto.src}
             alt={activePhoto.alt}
             fill
             priority
-            className="object-cover opacity-95 mix-blend-multiply"
+            className="object-cover"
             sizes="(max-width: 1024px) 100vw, 640px"
           />
         </div>

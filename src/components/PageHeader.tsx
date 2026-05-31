@@ -26,6 +26,7 @@ export default function PageHeader({ title, description, eyebrow, children, imag
         fill
         sizes="100vw"
         className="object-cover object-center"
+        quality={100}
       />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16">
         {eyebrow ? (

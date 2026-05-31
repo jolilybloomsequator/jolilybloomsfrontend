@@ -13,4 +13,28 @@ export const flowerHeroImages = [
   },
 ] as const;
 
-export const pageHeaderImage = flowerHeroImages[1];
+export const aboutGalleryPhotos = [
+  {
+    src: "https://github.com/user-attachments/assets/97cb2598-b0b4-4ecf-9171-56ad7b8924da",
+    alt: "Jolily Blooms about page photo one",
+  },
+  {
+    src: "https://github.com/user-attachments/assets/dfcb0fa3-646a-46c7-836b-6566834be3c5",
+    alt: "Jolily Blooms about page photo two",
+  },
+  {
+    src: "https://github.com/user-attachments/assets/4e846db5-d8a3-4dcf-a956-5ea61f11dee1",
+    alt: "Jolily Blooms about page photo three",
+  },
+] as const;
+
+export const pageHeaderImages = {
+  about: aboutGalleryPhotos[2],
+  flowers: aboutGalleryPhotos[0],
+  quality: aboutGalleryPhotos[1],
+  contact: flowerHeroImages[0],
+  faq: flowerHeroImages[1],
+  privacy: flowerHeroImages[2],
+} as const;
+
+export const pageHeaderImage = pageHeaderImages.flowers;

@@ -3,36 +3,20 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const galleryPhotos = [
-  {
-    src: "https://github.com/user-attachments/assets/97cb2598-b0b4-4ecf-9171-56ad7b8924da",
-    alt: "Jolily Blooms about page photo one",
-  },
-  {
-    src: "https://github.com/user-attachments/assets/dfcb0fa3-646a-46c7-836b-6566834be3c5",
-    alt: "Jolily Blooms about page photo two",
-  },
-  {
-    src: "https://github.com/user-attachments/assets/4e846db5-d8a3-4dcf-a956-5ea61f11dee1",
-    alt: "Jolily Blooms about page photo three",
-  },
-] as const;
-
-
+import { aboutGalleryPhotos } from "../data/siteImages";
 
 export default function AboutGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % galleryPhotos.length);
+      setActiveIndex((current) => (current + 1) % aboutGalleryPhotos.length);
     }, 5000);
 
     return () => window.clearInterval(timer);
   }, []);
 
-  const activePhoto = useMemo(() => galleryPhotos[activeIndex], [activeIndex]);
+  const activePhoto = useMemo(() => aboutGalleryPhotos[activeIndex], [activeIndex]);
 
   return (
     <div className="rounded-3xl border border-border-soft bg-gradient-to-br from-rose/60 via-white to-brand/10 p-4 shadow-soft">
@@ -54,7 +38,9 @@ export default function AboutGallery() {
         <button
           type="button"
           aria-label="Previous photo"
-          onClick={() => setActiveIndex((current) => (current - 1 + galleryPhotos.length) % galleryPhotos.length)}
+          onClick={() =>
+            setActiveIndex((current) => (current - 1 + aboutGalleryPhotos.length) % aboutGalleryPhotos.length)
+          }
           className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-brand shadow-soft transition hover:bg-white"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -62,7 +48,7 @@ export default function AboutGallery() {
         <button
           type="button"
           aria-label="Next photo"
-          onClick={() => setActiveIndex((current) => (current + 1) % galleryPhotos.length)}
+          onClick={() => setActiveIndex((current) => (current + 1) % aboutGalleryPhotos.length)}
           className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-brand shadow-soft transition hover:bg-white"
         >
           <ChevronRight className="h-5 w-5" />

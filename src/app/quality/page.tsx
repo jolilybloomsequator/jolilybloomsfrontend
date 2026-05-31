@@ -1,5 +1,6 @@
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
+import { pageHeaderImages } from "../../data/siteImages";
 
 const specs = [
   {
@@ -34,6 +35,7 @@ export default function QualityPage() {
         eyebrow="Quality & Specs"
         title="Export specifications that protect freshness"
         description="We follow strict grading and cold-chain protocols to ensure flowers arrive in perfect condition for global buyers."
+        image={pageHeaderImages.quality}
       />
 
       <section className="bg-white">

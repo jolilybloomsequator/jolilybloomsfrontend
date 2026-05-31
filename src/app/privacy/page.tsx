@@ -1,5 +1,6 @@
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
+import { pageHeaderImages } from "../../data/siteImages";
 
 const sections = [
   {
@@ -36,6 +37,7 @@ export default function PrivacyPage() {
         eyebrow="Privacy Policy"
         title="How we handle your data"
         description="Jolily Blooms Equator Limited is committed to protecting buyer data and maintaining GDPR-compliant practices for international partners."
+        image={pageHeaderImages.privacy}
       />
 
       <section className="bg-white">

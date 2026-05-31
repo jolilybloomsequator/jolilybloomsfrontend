@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
 import type { FlowerItem } from "../../data/flowers";
+import { pageHeaderImages } from "../../data/siteImages";
 
 export default function FlowersPage() {
   const [flowers, setFlowers] = useState<FlowerItem[]>([]);
@@ -48,6 +49,7 @@ export default function FlowersPage() {
         eyebrow="Flower Catalogue"
         title="Export-ready varieties sourced weekly"
         description="Browse our live catalogue of premium Kenyan flowers."
+        image={pageHeaderImages.flowers}
       />
 
       <section className="bg-white">

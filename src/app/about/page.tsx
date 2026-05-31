@@ -1,6 +1,7 @@
 import FadeIn from "../../components/FadeIn";
 import AboutGallery from "../../components/AboutGallery";
 import PageHeader from "../../components/PageHeader";
+import { pageHeaderImages } from "../../data/siteImages";
 
 const values = [
   {
@@ -24,6 +25,7 @@ export default function AboutPage() {
         eyebrow="About Jolily Blooms"
         title="A trusted Kenyan flower export partner"
         description="Jolily Blooms Equator Limited connects international buyers with export-grade flowers sourced from Kenyan farms. Our consolidation model simplifies procurement while maintaining transparency, quality, and on-time delivery."
+        image={pageHeaderImages.about}
       />
 
       <section className="bg-white">

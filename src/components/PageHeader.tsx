@@ -25,7 +25,7 @@ export default function PageHeader({ title, description, eyebrow, children, imag
         alt=""
         fill
         sizes="100vw"
-        className="scale-110 object-cover object-center opacity-30 blur-2xl"
+        className="object-cover object-center opacity-45"
       />
       <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-rose/70 to-white/75" />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16">

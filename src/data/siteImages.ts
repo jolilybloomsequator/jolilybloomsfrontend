@@ -30,10 +30,22 @@ export const aboutGalleryPhotos = [
 
 export const pageHeaderImages = {
   about: aboutGalleryPhotos[2],
-  flowers: aboutGalleryPhotos[0],
-  quality: aboutGalleryPhotos[1],
-  contact: flowerHeroImages[0],
-  faq: flowerHeroImages[1],
+  flowers: {
+    src: "https://github.com/user-attachments/assets/9233ab03-eb79-4182-9170-5ad7a8d37e3a",
+    alt: "Flower field with a gardener holding a bouquet",
+  },
+  quality: {
+    src: "https://github.com/user-attachments/assets/b6aea04f-ec6b-45e4-b76e-b104ad488a86",
+    alt: "Rows of blooming flowers in a field",
+  },
+  contact: {
+    src: "https://github.com/user-attachments/assets/74bc2985-8323-4be5-a33d-213769490c95",
+    alt: "Bright flowers arranged in a garden path",
+  },
+  faq: {
+    src: "https://github.com/user-attachments/assets/bf83233b-21e0-4633-9bf6-5f4154bc776a",
+    alt: "Vibrant flowers in a field",
+  },
   privacy: flowerHeroImages[2],
 } as const;
 

@@ -63,7 +63,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${fontClasses} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-cream text-charcoal font-sans">
+      <body className="relative isolate min-h-full flex flex-col bg-transparent text-charcoal font-sans">
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 -z-10 bg-[url('/images/hero-flowers.svg')] bg-cover bg-center bg-no-repeat opacity-15"
+        />
+        <div aria-hidden="true" className="fixed inset-0 -z-10 bg-cream/80" />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

@@ -5,34 +5,20 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-
-const heroImages = [
-  {
-    src: "https://github.com/user-attachments/assets/0a7c787c-a886-4dd6-b1ff-c274b87fcdf6",
-    alt: "Pink rose bloom with raindrops",
-  },
-  {
-    src: "https://github.com/user-attachments/assets/8458bdc0-af4a-4e90-89ef-d71aed8b1994",
-    alt: "White lily flower in bloom",
-  },
-  {
-    src: "https://github.com/user-attachments/assets/f032738f-0885-4d45-8731-2740288d73d8",
-    alt: "Mixed bouquet of colorful flowers",
-  },
-] as const;
+import { flowerHeroImages } from "../data/siteImages";
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % heroImages.length);
+      setActiveIndex((current) => (current + 1) % flowerHeroImages.length);
     }, 5000);
 
     return () => window.clearInterval(timer);
   }, []);
 
-  const activeImage = useMemo(() => heroImages[activeIndex], [activeIndex]);
+  const activeImage = useMemo(() => flowerHeroImages[activeIndex], [activeIndex]);
 
   return (
     <section className="bg-cream">
@@ -56,13 +42,15 @@ export default function Hero() {
             <button
               type="button"
               aria-label="Previous hero image"
-              onClick={() => setActiveIndex((current) => (current - 1 + heroImages.length) % heroImages.length)}
+              onClick={() =>
+                setActiveIndex((current) => (current - 1 + flowerHeroImages.length) % flowerHeroImages.length)
+              }
               className="rounded-full bg-white/90 p-2 text-brand shadow-soft transition hover:bg-white"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <div className="flex items-center gap-2 rounded-full bg-black/30 backdrop-blur-sm">
-              {heroImages.map((image, index) => (
+              {flowerHeroImages.map((image, index) => (
                 <button
                   key={image.src}
                   type="button"
@@ -78,7 +66,7 @@ export default function Hero() {
             <button
               type="button"
               aria-label="Next hero image"
-              onClick={() => setActiveIndex((current) => (current + 1) % heroImages.length)}
+              onClick={() => setActiveIndex((current) => (current + 1) % flowerHeroImages.length)}
               className="rounded-full bg-white/90 p-2 text-brand shadow-soft transition hover:bg-white"
             >
               <ChevronRight className="h-5 w-5" />

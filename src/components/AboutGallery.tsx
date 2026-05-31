@@ -25,16 +25,15 @@ export default function AboutGallery() {
         <div className="absolute left-4 top-4 z-10 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
           Our photos
         </div>
-        <div className="relative h-full">
-          <Image
-            src={activePhoto.src}
-            alt={activePhoto.alt}
-            fill
-            priority
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 640px"
-          />
-        </div>
+        <Image
+          src={activePhoto.src}
+          alt={activePhoto.alt}
+          fill
+          priority
+          quality={100}
+          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 640px"
+        />
         <button
           type="button"
           aria-label="Previous photo"

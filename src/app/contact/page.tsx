@@ -3,6 +3,7 @@ import ContactForm from "../../components/ContactForm";
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
 import { contactDetails } from "../../data/contact";
+import { pageHeaderImages } from "../../data/siteImages";
 
 export default function ContactPage() {
   return (
@@ -11,6 +12,7 @@ export default function ContactPage() {
         eyebrow="Contact Us"
         title="Start your weekly flower order"
         description="Send us your requirements and our team will respond within 24 hours with availability and pricing."
+        image={pageHeaderImages.contact}
       />
 
       <section className="bg-white">

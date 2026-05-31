@@ -2,22 +2,30 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { pageHeaderImage } from "../data/siteImages";
 
+type HeaderImage = {
+  src: string;
+  alt: string;
+};
+
 type PageHeaderProps = {
   title: string;
   description: string;
   eyebrow?: string;
   children?: ReactNode;
+  image?: HeaderImage;
 };
 
-export default function PageHeader({ title, description, eyebrow, children }: PageHeaderProps) {
+export default function PageHeader({ title, description, eyebrow, children, image }: PageHeaderProps) {
+  const backgroundImage = image ?? pageHeaderImage;
+
   return (
     <section className="relative overflow-hidden bg-cream">
       <Image
-        src={pageHeaderImage.src}
+        src={backgroundImage.src}
         alt=""
         fill
         sizes="100vw"
-        className="object-cover object-center opacity-30"
+        className="scale-110 object-cover object-center opacity-30 blur-2xl"
       />
       <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-rose/70 to-white/75" />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16">

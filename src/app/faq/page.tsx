@@ -1,5 +1,6 @@
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
+import { pageHeaderImages } from "../../data/siteImages";
 
 const faqs = [
   {
@@ -35,6 +36,7 @@ export default function FaqPage() {
         eyebrow="FAQ"
         title="Common buyer questions"
         description="Answers to the most frequent inquiries from our wholesale and import partners."
+        image={pageHeaderImages.faq}
       />
 
       <section className="bg-white">

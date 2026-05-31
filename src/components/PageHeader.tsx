@@ -18,8 +18,9 @@ type PageHeaderProps = {
 export default function PageHeader({ title, description, eyebrow, children, image }: PageHeaderProps) {
   const backgroundImage = image ?? pageHeaderImage;
 
-  return (
-    <section className="relative overflow-hidden bg-cream">
+return (
+  <section className="relative overflow-hidden bg-cream">
+    <div className="relative w-full h-[400px]">
       <Image
         src={backgroundImage.src}
         alt=""
@@ -27,17 +28,20 @@ export default function PageHeader({ title, description, eyebrow, children, imag
         sizes="100vw"
         className="object-cover object-center"
         quality={100}
+        priority
       />
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16">
+      {/* Text overlay sits inside the image container */}
+      <div className="absolute inset-0 mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16 justify-center">
         {eyebrow ? (
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brand">
             {eyebrow}
           </span>
         ) : null}
         <h1 className="text-3xl font-semibold text-charcoal md:text-4xl">{title}</h1>
-        <p className="max-w-3xl text-base text-muted md:text-lg">{description}</p>
+        <p className="max-w-3xl text-base md:text-lg">{description}</p>
         {children}
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }

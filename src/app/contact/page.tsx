@@ -6,6 +6,8 @@ import { contactDetails } from "../../data/contact";
 import { pageHeaderImages } from "../../data/siteImages";
 
 export default function ContactPage() {
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${contactDetails.email}`;
+
   return (
     <div>
       <PageHeader
@@ -50,6 +52,14 @@ export default function ContactPage() {
                   <dd>9:00am - 1:00pm EAT</dd>
                 </div>
               </dl>
+              <a
+                href={gmailComposeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-dark"
+              >
+                Send Inquiry
+              </a>
             </div>
           </FadeIn>
         </div>

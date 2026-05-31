@@ -31,22 +31,25 @@ export const aboutGalleryPhotos = [
 export const pageHeaderImages = {
   about: aboutGalleryPhotos[2],
   flowers: {
-    src: "https://github.com/user-attachments/assets/9233ab03-eb79-4182-9170-5ad7a8d37e3a",
-    alt: "Flower field with a gardener holding a bouquet",
+    src: "https://github.com/user-attachments/assets/f748c236-61ab-4109-bfbd-b13f2ec14da6",
+    alt: "Floral background for the flowers page",
   },
   quality: {
-    src: "https://github.com/user-attachments/assets/b6aea04f-ec6b-45e4-b76e-b104ad488a86",
-    alt: "Rows of blooming flowers in a field",
+    src: "https://github.com/user-attachments/assets/7d80c337-2ef9-4c0c-84a3-8cc909e82a84",
+    alt: "Floral background for the quality page",
   },
   contact: {
     src: "https://github.com/user-attachments/assets/74bc2985-8323-4be5-a33d-213769490c95",
     alt: "Bright flowers arranged in a garden path",
   },
   faq: {
-    src: "https://github.com/user-attachments/assets/bf83233b-21e0-4633-9bf6-5f4154bc776a",
-    alt: "Vibrant flowers in a field",
+    src: "https://github.com/user-attachments/assets/4c4ce5ae-0fa6-40b2-82fb-54e7ee61a82a",
+    alt: "Floral background for the FAQ page",
   },
-  privacy: flowerHeroImages[2],
+  privacy: {
+    src: "https://github.com/user-attachments/assets/56d9e2cf-4e5c-4af3-86a1-be62b781f6ae",
+    alt: "Floral background for the privacy page",
+  },
 } as const;
 
 export const pageHeaderImage = pageHeaderImages.flowers;

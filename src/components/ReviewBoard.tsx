@@ -14,7 +14,8 @@ const reviewSchema = z.object({
   website: z.string().optional(),
 });
 
-type ReviewFormValues = z.infer<typeof reviewSchema>;
+type ReviewFormValues = z.output<typeof reviewSchema>;
+type ReviewFormInput = z.input<typeof reviewSchema>;
 
 type ReviewBoardProps = {
   initialReviews: Review[];
@@ -50,7 +51,7 @@ export default function ReviewBoard({ initialReviews }: ReviewBoardProps) {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<ReviewFormValues>({
+  } = useForm<ReviewFormInput, undefined, ReviewFormValues>({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
       name: "",

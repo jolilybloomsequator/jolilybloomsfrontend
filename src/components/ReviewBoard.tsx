@@ -61,7 +61,7 @@ export default function ReviewBoard({ initialReviews }: ReviewBoardProps) {
     },
   });
 
-  const rating = useWatch({ control, name: "rating" }) ?? 5;
+  const rating = Number(useWatch({ control, name: "rating" }) ?? 5);
 
   useEffect(() => {
     let cancelled = false;

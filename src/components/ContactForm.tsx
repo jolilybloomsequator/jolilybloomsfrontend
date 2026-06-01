@@ -40,7 +40,7 @@ export default function ContactForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<InquiryFormValues>({
+  } = useForm<z.input<typeof inquirySchema>, undefined, z.output<typeof inquirySchema>>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
       varieties: [],

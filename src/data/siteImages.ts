@@ -46,6 +46,10 @@ export const pageHeaderImages = {
     src: "https://github.com/user-attachments/assets/4c4ce5ae-0fa6-40b2-82fb-54e7ee61a82a",
     alt: "Floral background for the FAQ page",
   },
+  reviews: {
+    src: flowerHeroImages[2].src,
+    alt: "Floral background for the reviews page",
+  },
   privacy: {
     src: "https://github.com/user-attachments/assets/56d9e2cf-4e5c-4af3-86a1-be62b781f6ae",
     alt: "Floral background for the privacy page",

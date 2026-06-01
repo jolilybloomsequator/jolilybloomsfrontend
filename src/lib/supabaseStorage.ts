@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
 export const FLOWER_CATALOGUE_OBJECT_PATH = "catalogue/flowers.json";
+export const REVIEWS_OBJECT_PATH = "catalogue/reviews.json";
 
 export function getSupabaseStorageConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -167,12 +167,20 @@ export default async function Home() {
               Speak with our export team for tailored availability and pricing.
             </p>
           </div>
-          <Link
-            href="/contact"
-            className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-charcoal"
-          >
-            Contact the team
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/reviews"
+              className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
+            >
+              Read reviews
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-charcoal"
+            >
+              Contact the team
+            </Link>
+          </div>
         </div>
       </section>
     </div>

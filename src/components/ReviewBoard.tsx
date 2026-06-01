@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Star } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import type { Review } from "@/data/reviews";
 
@@ -45,9 +45,9 @@ export default function ReviewBoard({ initialReviews }: ReviewBoardProps) {
   const [loadingReviews, setLoadingReviews] = useState(true);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const {
+    control,
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ReviewFormValues>({
@@ -60,7 +60,7 @@ export default function ReviewBoard({ initialReviews }: ReviewBoardProps) {
     },
   });
 
-  const rating = watch("rating") ?? 5;
+  const rating = useWatch({ control, name: "rating" }) ?? 5;
 
   useEffect(() => {
     let cancelled = false;

@@ -21,6 +21,10 @@ const inquirySchema = z.object({
 type InquiryFormValues = z.infer<typeof inquirySchema>;
 
 const varietyOptions = [
+  "General product information",
+  "Pricing & availability",
+  "New buyer onboarding",
+  "Other / general question",
   "Roses",
   "Spray Roses",
   "Carnations",
@@ -127,7 +131,7 @@ export default function ContactForm() {
           <input
             type="text"
             {...register("estimatedVolume")}
-            placeholder="e.g. 20 boxes"
+            placeholder="e.g. 20 boxes (or N/A for general inquiries)"
             className="w-full rounded-xl border border-border-soft bg-white px-4 py-3 text-sm text-charcoal focus:border-brand focus:outline-none"
           />
           {errors.estimatedVolume ? (
@@ -137,7 +141,10 @@ export default function ContactForm() {
       </div>
 
       <div className="space-y-3">
-        <p className="text-sm font-medium text-charcoal">Flower Varieties of Interest *</p>
+        <p className="text-sm font-medium text-charcoal">Topics of Interest *</p>
+        <p className="text-xs text-muted">
+          Select flower varieties, general information topics, or both.
+        </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {varietyOptions.map((option) => (
             <label key={option} className="flex items-center gap-3 rounded-xl border border-border-soft bg-white px-4 py-3 text-sm text-charcoal">

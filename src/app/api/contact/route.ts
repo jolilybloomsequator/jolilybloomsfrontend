@@ -1,8 +1,8 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import DOMPurify from "isomorphic-dompurify";
 import * as nodemailer from "nodemailer";
 import { z } from "zod";
+import { sanitizePlainText } from "../../../lib/sanitizePlainText";
 
 type RateLimitEntry = {
   count: number;
@@ -47,9 +47,6 @@ const inquirySchema = z.object({
   message: z.string().min(10),
   website: z.string().optional(),
 });
-
-const sanitizeText = (value: string) =>
-  DOMPurify.sanitize(value, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }).trim();
 
 const getClientIp = (request: Request) => {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -125,14 +122,14 @@ export async function POST(request: Request) {
   }
 
   const sanitizedPayload = {
-    fullName: sanitizeText(parsed.data.fullName),
-    companyName: sanitizeText(parsed.data.companyName),
-    country: sanitizeText(parsed.data.country),
-    email: sanitizeText(parsed.data.email),
-    whatsapp: sanitizeText(parsed.data.whatsapp),
-    varieties: parsed.data.varieties.map((value) => sanitizeText(value)),
-    estimatedVolume: sanitizeText(parsed.data.estimatedVolume),
-    message: sanitizeText(parsed.data.message),
+    fullName: sanitizePlainText(parsed.data.fullName),
+    companyName: sanitizePlainText(parsed.data.companyName),
+    country: sanitizePlainText(parsed.data.country),
+    email: sanitizePlainText(parsed.data.email),
+    whatsapp: sanitizePlainText(parsed.data.whatsapp),
+    varieties: parsed.data.varieties.map((value) => sanitizePlainText(value)),
+    estimatedVolume: sanitizePlainText(parsed.data.estimatedVolume),
+    message: sanitizePlainText(parsed.data.message),
   };
 
   if (!sanitizedPayload.fullName || !sanitizedPayload.message) {

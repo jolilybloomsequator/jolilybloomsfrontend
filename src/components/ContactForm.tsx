@@ -44,7 +44,7 @@ export default function ContactForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<InquiryFormValues>({
+  } = useForm<z.input<typeof inquirySchema>, undefined, z.output<typeof inquirySchema>>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
       varieties: [],
@@ -181,7 +181,7 @@ export default function ContactForm() {
           disabled={isSubmitting}
           className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {isSubmitting ? "Sending..." : "Submit Inquiry"}
+          {isSubmitting ? "Sending..." : "Send Inquiry"}
         </button>
         <p className="text-sm text-muted">
           By submitting, you agree to our privacy policy and communication terms.

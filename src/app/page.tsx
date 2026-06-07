@@ -1,9 +1,9 @@
-import { Globe, Leaf, Package, ShieldCheck, Thermometer, Truck } from "lucide-react";
+import { Leaf, ShieldCheck, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import FadeIn from "../components/FadeIn";
 import Hero from "../components/Hero";
-import { flowerCatalogue } from "../data/flowers";
+import { loadFlowerCatalogue } from "../lib/flowerCatalogue";
 
 const highlights = [
   {
@@ -18,31 +18,13 @@ const highlights = [
   },
   {
     title: "Export Expertise",
-    description: "JKIA-based logistics team coordinates documentation, freight slots, and dispatch updates.",
-    icon: Truck,
+    description: "Carefully prepared flower orders with consistent grading and presentation.",
+    icon: Sparkles,
   },
 ];
 
-const logisticsPoints = [
-  {
-    title: "48-hour dispatch",
-    detail: "Cut-to-cargo timelines with daily uplift schedules out of JKIA.",
-    icon: Package,
-  },
-  {
-    title: "Cold chain assurance",
-    detail: "Temperature-controlled pre-cooling and data loggers on request.",
-    icon: Thermometer,
-  },
-  {
-    title: "Global reach",
-    detail: "Regular freight partners for Europe and the Middle East with tracked shipments.",
-    icon: Globe,
-  },
-];
-
-export default function Home() {
-  const featuredFlowers = flowerCatalogue.slice(0, 4);
+export default async function Home() {
+  const featuredFlowers = (await loadFlowerCatalogue()).slice(0, 4);
 
   return (
     <div>
@@ -95,7 +77,11 @@ export default function Home() {
                   className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-soft"
                 >
                   <Image
-                    src="/images/flower-placeholder.svg"
+                    src={
+                      flower.image && flower.image.trim().length > 0
+                        ? flower.image
+                        : "/images/flower-placeholder.svg"
+                    }
                     alt={`${flower.name} variety`}
                     width={320}
                     height={240}
@@ -173,30 +159,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-rose">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-16">
-          <div className="max-w-xl space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brand">
-              Export & Logistics
-            </span>
-            <h2 className="text-3xl font-semibold text-charcoal">End-to-end export coordination</h2>
-            <p className="text-sm text-muted">
-              We handle documentation, cold-chain monitoring, and freight bookings so buyers receive clear
-              schedules and reliable delivery windows.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {logisticsPoints.map((point) => (
-              <FadeIn key={point.title} className="rounded-2xl border border-border-soft bg-white p-6">
-                <point.icon className="h-6 w-6 text-brand" />
-                <h3 className="mt-4 text-lg font-semibold text-charcoal">{point.title}</h3>
-                <p className="mt-2 text-sm text-muted">{point.detail}</p>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="bg-charcoal">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-16 text-white md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
@@ -205,12 +167,20 @@ export default function Home() {
               Speak with our export team for tailored availability and pricing.
             </p>
           </div>
-          <Link
-            href="/contact"
-            className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-charcoal"
-          >
-            Contact the team
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/reviews"
+              className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
+            >
+              Read reviews
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-charcoal"
+            >
+              Contact the team
+            </Link>
+          </div>
         </div>
       </section>
     </div>

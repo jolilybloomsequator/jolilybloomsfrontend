@@ -1,5 +1,6 @@
 import FadeIn from "../../components/FadeIn";
 import PageHeader from "../../components/PageHeader";
+import { pageHeaderImages } from "../../data/siteImages";
 
 const faqs = [
   {
@@ -39,8 +40,7 @@ const faqs = [
   },
   {
     question: "How soon can you ship after confirming an order?",
-    answer:
-      "Typical lead time is 48-72 hours depending on variety availability and freight schedules.",
+    answer: "Typical lead time is 48-72 hours depending on variety availability.",
   },
   {
     question: "Do you provide quality inspection reports?",
@@ -71,6 +71,7 @@ export default function FaqPage() {
         eyebrow="FAQ"
         title="Common buyer questions"
         description="Answers about Jolily Blooms, our export process, and common questions from wholesale and import partners."
+        image={pageHeaderImages.faq}
       />
 
       <section className="bg-white">
